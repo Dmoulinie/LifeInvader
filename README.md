@@ -5,10 +5,10 @@
 
 -- Front --
 
-React :
+- React :
 
 -- Back --
 
-Commentaires (Express) : 3000
-Connexion : 8080
-Images : 5000
+- Commentaires (Express) : 3000
+- Connexion (Springboot) : 8080
+- Images (Flask) : 5000
