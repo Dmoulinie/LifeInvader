@@ -1,0 +1,18 @@
+version: '3'
+services:
+  front:
+    build: ./front/react
+    ports:
+     - "8081:8081"
+  commentaires:
+    build: ./back/commentaires
+    ports:
+      - "3000:3000"
+  connexion:
+    build: ./back/connexion
+    ports:
+      - "8080:8080"
+  images:
+    build: ./back/images
+    ports:
+      - "5000:5000" 
