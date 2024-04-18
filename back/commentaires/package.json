@@ -1,0 +1,16 @@
+{
+    "name": "nodejs-commentaires",
+    "version": "1.0.0",
+    "description": "nodejs commentaires",
+    "author": "Damiengue",
+    "license": "MIT",
+    "main": "app.js",
+    "keywords": [
+      "nodejs",
+      "bootstrap",
+      "express"
+    ],
+    "dependencies": {
+      "express": "^4.16.4"
+    }
+  }
