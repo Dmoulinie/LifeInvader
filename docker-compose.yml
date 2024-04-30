@@ -1,15 +1,15 @@
 version: '3'
 services:
 
-  # react-front:
-  #   build: ./front/react
-  #   ports:
-  #    - "8081:8081"
-  #   depends_on:
-  #    - mongodb-node
-  #    - javascript
-  #    - java
-  #    - python
+  react-front:
+    build: ./front/react
+    ports:
+     - "5173:5173"
+    depends_on:
+     - mongodb-node
+     - javascript
+    #  - java
+     - python
 
 
 
@@ -33,6 +33,7 @@ services:
   #     - ./back/connexion:/app/connexion
   #   ports:
   #     - "8080:8080"
+
 
 
   python:
