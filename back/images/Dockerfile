@@ -1,10 +1,15 @@
-FROM alpine:latest
+FROM python:3.8-alpine
+
 RUN apk update
-RUN apk add py-pip
-RUN apk add --no-cache python3-dev 
-WORKDIR /app
+
+WORKDIR /app/images
+
 COPY . .
 
+RUN pip install -r requirements.txt
+
 EXPOSE 5000
-# RUN pip install -r requirements.txt
+
+
+
 CMD ["python3", "app.py"]

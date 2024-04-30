@@ -2,15 +2,25 @@
     "name": "nodejs-commentaires",
     "version": "1.0.0",
     "description": "nodejs commentaires",
-    "author": "Damiengue",
+    "author": "Damien",
     "license": "MIT",
+    "scripts": {
+      "start": "node app.js",
+      "start.dev": "nodemon"
+    },
     "main": "app.js",
     "keywords": [
       "nodejs",
       "bootstrap",
-      "express"
+      "express",
+      "mongoose"
     ],
+    "devDependencies": {
+      "nodemon": "^2.0.15"
+    },
     "dependencies": {
-      "express": "^4.16.4"
+      "express": "^4.16.4",
+      "mongoose": "^8.3.2",
+      "nodemon": "^2.0.15"
     }
   }

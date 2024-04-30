@@ -1,18 +1,63 @@
 version: '3'
 services:
-  front:
-    build: ./front/react
-    ports:
-     - "8081:8081"
-  commentaires:
+
+  # react-front:
+  #   build: ./front/react
+  #   ports:
+  #    - "8081:8081"
+  #   depends_on:
+  #    - mongodb-node
+  #    - javascript
+  #    - java
+  #    - python
+
+
+
+  javascript:
     build: ./back/commentaires
+    volumes: 
+    - ./back/commentaires/:/app/commentaires
+    networks:
+      - node-network
     ports:
       - "3000:3000"
-  connexion:
-    build: ./back/connexion
-    ports:
-      - "8080:8080"
-  images:
+    restart: unless-stopped
+    depends_on:
+      - mongodb-node
+    
+
+
+  # java:
+  #   build: ./back/connexion
+  #   volumes:
+  #     - ./back/connexion:/app/connexion
+  #   ports:
+  #     - "8080:8080"
+
+
+  python:
     build: ./back/images
+    volumes:
+      - ./back/images:/app/images
     ports:
       - "5000:5000" 
+
+
+
+
+  mongodb-node:
+    image: mongo:6-jammy
+    networks:
+      - node-network
+    ports:
+      - '27017:27017'
+    volumes:
+      - dbdata6:/data/db
+    restart: always
+
+volumes:
+  dbdata6:
+  
+networks:
+  node-network:
+  
