@@ -2,12 +2,11 @@ FROM node:10-alpine
 
 
 
-WORKDIR /app/commentaires
 
 COPY package*.json ./
 COPY . .
-RUN npm install
 
-EXPOSE 3000
+RUN npm install 
 
-CMD [ "node", "app.js" ]
+
+CMD [ "npm", "run", "start" ]
