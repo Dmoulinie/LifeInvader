@@ -22,6 +22,11 @@ git clone git@github.com:Dmoulinie/ShowMyLife.git
 docker compose up
 ```
 
+4. Afficher le front
+```
+localhost:5173
+```
+
 ## Ports utilisés   
 
 |  Type |   Langage   |  Framework  |    Port     | Base de données | Ports de la BDD |
