@@ -16,7 +16,7 @@ services:
   javascript:
     build: ./back/commentaires
     volumes: 
-    - ./back/commentaires/:/app/commentaires
+    - ./back/commentaires/:/app
     networks:
       - node-network
     ports:
