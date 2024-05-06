@@ -27,12 +27,12 @@ services:
     
 
 
-  # java:
-  #   build: ./back/connexion
-  #   volumes:
-  #     - ./back/connexion:/app/connexion
-  #   ports:
-  #     - "8080:8080"
+  java:
+    build: ./back/connexion
+    volumes:
+      - ./back/connexion:/home/app
+    ports:
+      - "8080:8080"
 
 
 
