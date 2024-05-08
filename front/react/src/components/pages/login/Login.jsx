@@ -6,10 +6,11 @@ import GithubIcon from '@assets/login/svg/github-mark-white.svg?react';
 import "./Login.css";
 import { Link } from 'react-router-dom';
 
-const LinkGitOAuth2 = "#git";
-const LinkGoogleOAuth2 = "#google";
 
 const Login = () => {
+    const LinkGitOAuth2 = "#git";
+    const LinkGoogleOAuth2 = "#google";
+
     return (
         <div className="flex flex-row justify-center items-center min-h-screen">
         <div className="flex flex-col shadow-xl rounded-md"> 

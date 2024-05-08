@@ -13,6 +13,7 @@ import Recherche from "@assets/start/svg/Recherche.svg?react";
 import Reel from "@assets/start/svg/Reel.svg?react";
 import Threads from "@assets/start/svg/Threads.svg?react";
 import Login from "@assets/start/svg/Login.svg?react";
+import Instamini from "@assets/start/svg/Instamini.svg?react";
 
 
 const Layout = () => {
@@ -22,116 +23,154 @@ const Layout = () => {
         current: 'text-gray-950 bg-gray-100 rounded-md',
     };
 
+    const navigationLinks = [
+        { path: "/", label: "Accueil", icon: Accueil, href: "/" },
+        { path: "/search", label: "Recherche", icon: Recherche, href: "/search" },
+        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/" },
+        { path: "/reels", label: "Reels", icon: Reel, href: "/" },
+        { path: "/msg", label: "Messages", icon: Messages, href: "/" },
+        { path: "/notif", label: "Notifications", icon: Notifications, href: "/" },
+        { path: "/post", label: "Créer", icon: Creer, href: "/post" },
+        { path: "/login", label: "Se Connecter", icon: Login, href: "/login" },
+    ];
+    const otherNavigationLinks = [
+        { path: "/threads", label: "Threads", icon: Threads, href: "/" },
+        { path: "/plus", label: "Options", icon: Plus, href: "/" },
+    ];
+
+    const mobileNavigationLinks = [
+        { path: "/", label: "Accueil", icon: Accueil, href: "/" },
+        { path: "/search", label: "Recherche", icon: Recherche, href: "/search" },
+        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/" },
+        { path: "/reels", label: "Reels", icon: Reel, href: "/" },
+        { path: "/msg", label: "Messages", icon: Messages, href: "/" },
+        { path: "/post", label: "Créer", icon: Creer, href: "/post" },
+        { path: "/login", label: "Se Connecter", icon: Login, href: "/login" },
+    ];
+
     return (
         <>
             <div className="flex flex-row relative z-20">
 
-                <header className="flex-none w-[15.4rem] relative z-20 border-r border-slate-300">
-                    <nav className="left-0 pl-2 fixed">
-                        <div className="flex h-screen flex-col w-[14rem]">
-                            <ul>
-                                <li className="text-gray-500 hover:text-gray-950 mt-9 pl-5">
-                                    <Link to="/"><img src={Logoinsta} alt="logoinsta" className="w-[8rem] translate-x-[-1rem]"/></Link>
-                                </li>
-                            </ul>
+                <header className="border-r border-gray-200">
+                    { /* Pour écran large */ }
+                    <div className="hidden sm:hidden lg:flex flex-none w-[15.4rem] relative z-20 border-r border-slate-300">
+                        <nav className="left-0 pl-2 fixed">
+                            { /* NAVIGATION  */ }
+                                <ul className="flex  h-screen flex-col w-[14rem]">
+                                    {/* Image / Logo */}
+                                    <ul>
+                                        <li className="text-gray-500 hover:text-gray-950 mt-9 pl-5">
+                                            <Link to="/"><img src={Logoinsta} alt="logoinsta" className="w-[8rem] translate-x-[-1rem]"/></Link>
+                                        </li>
+                                    </ul>
 
-                            <ul className="grow mt-7 gap-3">
-                                <li className={location.pathname === '/'? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Accueil /></div>
-                                    <div className="inline-block ml-3">Accueil</div>
-                                </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/search'? linkClasses.current : linkClasses.default}>
-                                <Link to="/search">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Recherche /></div>
-                                    <div className="inline-block ml-3">Recherche</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/discovery'? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Decouvrir /></div>
-                                    <div className="inline-block ml-3">Découvrir</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/reels'? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Reel /></div>
-                                    <div className="inline-block ml-3">Reels</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/msg'? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Messages /></div>
-                                    <div className="inline-block ml-3">Messages</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/notif'? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Notifications /></div>
-                                    <div className="inline-block ml-3">Notifications</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/post'? linkClasses.current : linkClasses.default}>
-                                <Link to="/post">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Creer /></div>
-                                    <div className="inline-block ml-3">Creer</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/login' ? linkClasses.current : linkClasses.default}>
-                                <Link to="/login">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Login /></div>
-                                    <div className="inline-block ml-3">Login</div>
-                                    </div>
-                                </Link>
-                                </li>
-                            </ul>
+                                    {/* Liens de navigation */}
+                                    <ul className="grow mt-7 gap-3">
+                                        {navigationLinks.map((link) => (
+                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                            <Link to={link.href}>
+                                            <div className="py-4 pl-5 flex">
+                                                <div className="inline-block">{React.createElement(link.icon)}</div> 
+                                                <div className="inline-block ml-3">{link.label}</div>
+                                            </div>
+                                            </Link>
+                                        </li>
+                                        ))}
+                                    </ul>
 
-                            <ul className="mb-5">
-                                <li className={location.pathname === '/threads' ? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Threads /></div>
-                                    <div className="inline-block ml-3">Threads</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/plus' ? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Plus /></div>
-                                    <div className="inline-block ml-3">Plus</div>
-                                    </div>
-                                </Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
+                                    {/* Autres de navigation */}
+                                    <ul className="mb-5">
+                                        {otherNavigationLinks.map((link) => (
+                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                            <Link to={link.href}>
+                                            <div className="py-4 pl-5 flex">
+                                                <div className="inline-block">{React.createElement(link.icon)}</div> 
+                                                <div className="inline-block ml-3">{link.label}</div>
+                                            </div>
+                                            </Link>
+                                        </li>
+                                        ))}
+                                    </ul>
+                                </ul>
+                        </nav>
+                    </div>
+
+                    { /* Pour écran moyen */ }
+                    <div className="hidden sm:flex lg:hidden flex-none w-[5rem] relative z-20 border-r border-slate-300">
+                        <nav className="left-0 pl-2 fixed">
+                            { /* NAVIGATION  */ }
+                                <ul className="flex  h-screen flex-col w-[4.02rem]">
+                                    {/* Image / Logo */}
+                                    <ul>
+                                        <li className="text-gray-500 hover:text-gray-950 mt-9 pl-5">
+                                            <Link to="/">
+                                                <Instamini className="w-[4rem] translate-x-[-1.2rem]"/>
+                                            </Link>
+                                        </li>
+                                    </ul>
+
+                                    {/* Liens de navigation */}
+                                    <ul className="grow mt-10 gap-3">
+                                        {navigationLinks.map((link) => (
+                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                            <Link to={link.href}>
+                                            <div className="py-4 pl-5 flex">
+                                                <div className="inline-block">{React.createElement(link.icon)}</div> 
+                                            </div>
+                                            </Link>
+                                        </li>
+                                        ))}
+                                    </ul>
+
+                                    {/* Autres de navigation */}
+                                    <ul className="mb-5">
+                                        {otherNavigationLinks.map((link) => (
+                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                            <Link to={link.href}>
+                                            <div className="py-4 pl-5 flex">
+                                                <div className="inline-block">{React.createElement(link.icon)}</div> 
+                                            </div>
+                                            </Link>
+                                        </li>
+                                        ))}
+                                    </ul>
+                                </ul>
+                        </nav>
+                    </div>
+
+                    { /* Pour petit écran (mobile) */ }
+                    <div className="flex sm:hidden lg:hidden flex-none relative z-20">
+                        <nav className="flex justify-center bottom-0 fixed w-full bg-white border-t border-slate-300">
+                            { /* NAVIGATION  */ }
+                                <ul className="flex flex-row my-2 w-full">
+                                    {/* Liens de navigation */}
+                                    <ul className="flex flex-row justify-between w-full px-7">
+                                        {mobileNavigationLinks.map((link) => (
+                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                            <Link to={link.href}>
+                                            <div className="py-3 px-3 flex">
+                                                <div className="inline-block">{React.createElement(link.icon)}</div> 
+                                            </div>
+                                            </Link>
+                                        </li>
+                                        ))}
+                                    </ul>
+                                </ul>
+                        </nav>
+                    </div>
                 </header>
 
+
+                { /* Le reste du site : */ }
                 <div className="grow">
                     <main className='min-h-[100vh] w-full grow'>
                         <Outlet />
                     </main>
 
 
-                    <footer className="flex flex-col py-10 bg-transparent z-10 bg-slate-100">
-                        <p className="text-center">Footer</p>
+                    <footer className="flex flex-col py-11 z-10 bg-slate-50">
+                        <p className="text-center">©2024. Site web fortement inspirée d'Instagram. Tout droits réservés.</p>
                     </footer>
                 </div>
             </div>
