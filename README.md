@@ -31,7 +31,7 @@ localhost:5173
 
 |  Type |   Langage   |  Framework  |    Port     | Base de données | Ports de la BDD |
 | :---: | :---------: | :---------: |:----------: | :-------------: | :-------------: |
-| Front |  Typescript |    React    |    5173     |        X        |        X        |
+| Front |  Javascript |    React    |    5173     |        X        |        X        |
 | Back  |     Java    |  Springboot |    8080     |      MySQL      |    A définir    |
 | Back  |    Node.js  |   Express   |    3000     |     MongoDB     |  27017 : 27017  |
 | Back  |    Python   |    Flask    |    5000     |    A définir    |    A définir    |

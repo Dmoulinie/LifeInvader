@@ -129,10 +129,10 @@ const Layout = () => {
                 </main>
 
             </div>
+                <footer className="py-10 absolute left-0 right-0 z-10">
+                <p className="text-center">Footer  fezfez                   fhuizgefoifhepze zfafze</p>
+                </footer>
 
-            <footer className="py-10 absolute left-0 right-0 bg-gray-100 z-10">
-                <p className="text-center">Footer</p>
-            </footer>
         </>
     )
 };

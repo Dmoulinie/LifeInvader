@@ -6,6 +6,7 @@ import Post from './components/pages/post/Post'
 import Search from './components/pages/search/Search'
 import Login from './components/pages/login/Login'
 import Signup from './components/pages/login/Signup'
+import User from './components/pages/user/userpage'
 import NoPage from './components/pages/nopage/NoPage'
 import './App.css'
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="search" element={<Search />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="userpage" element={<User />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
