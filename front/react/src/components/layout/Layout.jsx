@@ -124,14 +124,17 @@ const Layout = () => {
                     </nav>
                 </header>
 
-                <main className='min-h-[100vh] w-full grow'>
-                    <Outlet />
-                </main>
+                <div className="grow">
+                    <main className='min-h-[100vh] w-full grow'>
+                        <Outlet />
+                    </main>
 
+
+                    <footer className="flex flex-col py-10 bg-transparent z-10 bg-slate-100">
+                        <p className="text-center">Footer</p>
+                    </footer>
+                </div>
             </div>
-                <footer className="py-10 absolute left-0 right-0 z-10">
-                <p className="text-center">Footer  fezfez                   fhuizgefoifhepze zfafze</p>
-                </footer>
 
         </>
     )
