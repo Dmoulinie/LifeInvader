@@ -21,7 +21,7 @@ open the project in localhost created
 npm install -D tailwindcss postcss autoprefixer 
 npx tailwindcss init -p
 ```
-## Configure your template path
+**Configure your template path**
 add in tailwind.config.js :
 ```js
 content: [
@@ -29,14 +29,14 @@ content: [
     "./src/**/*.{js,jsx,ts,tsx}",
 ],
 ```
-## Add the tailwind CSS in your project
+**Add the tailwind CSS in your project**
 add in index.css :
 ```css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 ```
-## run it (to test)
+**run it (to test)**
 ```
 npm run dev
 ```
@@ -55,12 +55,12 @@ The result should be :
 npm i @gsap/react
 ```
 
-Then import and use in Animation.js :
+**Then import and use in Animation.js :**
 ```js
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger); //Don't forget to register the plugin
 
 export function projectAnimations() {
 }
@@ -153,3 +153,55 @@ And Create a Layout Component...
 # To deploy it 
 run ```npm run build```
 drag and drop the build folder in the web hosting service
+
+
+# To install shadcn/ui :
+**Add a new file named : "jsconfig.json" if you're using Javascript and "tsconfig.json" for Typescript**
+```json
+{
+  "compilerOptions": {
+    // ...
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+    // ...
+  }
+}
+```
+**Update the config : "vite.config.js"**
+```js
+import path from "path"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
+ 
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+})
+```
+**Run the CLI**
+```npx shadcn-ui@latest init```
+
+**Then add your component like this :**
+```npx shadcn-ui@latest add button```
+```js
+import { Button } from "@/components/ui/button"
+
+export default function Home() {
+  return (
+    <div>
+      <Button>Click me</Button>
+    </div>
+  )
+}
+```
+
+
+
