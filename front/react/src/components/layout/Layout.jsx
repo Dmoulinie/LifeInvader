@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import Logoinsta from "@assets/start/instagram-new.png";
 
@@ -15,8 +15,23 @@ import Threads from "@assets/start/svg/Threads.svg?react";
 import Login from "@assets/start/svg/Login.svg?react";
 import Instamini from "@assets/start/svg/Instamini.svg?react";
 
+import ExternalLink from "./ExternalLink/ExternalLink";
+import { CSSTransition } from 'react-transition-group';
+
+import "./Layout.css";
+
 
 const Layout = () => {
+    const [showModalPlus, setShowModalPlus] = useState(false);
+
+    const handlePlusClick = () => {
+        setShowModalPlus(true);
+    };    
+    
+    const handleCloseModal = () => {
+        setShowModalPlus(false);
+    };
+
     const location = useLocation();
     const linkClasses = {
         default: 'text-gray-500 hover:text-gray-950 hover:bg-gray-100 rounded-md',
@@ -24,28 +39,28 @@ const Layout = () => {
     };
 
     const navigationLinks = [
-        { path: "/", label: "Accueil", icon: Accueil, href: "/" },
-        { path: "/search", label: "Recherche", icon: Recherche, href: "/search" },
-        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/" },
-        { path: "/reels", label: "Reels", icon: Reel, href: "/" },
-        { path: "/msg", label: "Messages", icon: Messages, href: "/" },
-        { path: "/notif", label: "Notifications", icon: Notifications, href: "/" },
-        { path: "/post", label: "Créer", icon: Creer, href: "/post" },
-        { path: "/login", label: "Se Connecter", icon: Login, href: "/login" },
+        { path: "/", label: "Accueil", icon: Accueil, href: "/", external: false },
+        { path: "/search", label: "Recherche", icon: Recherche, href: "/search", external: false },
+        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/", external: false },
+        { path: "/reels", label: "Reels", icon: Reel, href: "https://youtu.be/dQw4w9WgXcQ?si=47-VX_Ot32PPuIoZ" , external: true },
+        { path: "/msg", label: "Messages", icon: Messages, href: "#", external: false },
+        { path: "/notif", label: "Notifications", icon: Notifications, href: "#", external: false },
+        { path: "/post", label: "Créer", icon: Creer, href: "/post", external: false },
+        { path: "/login", label: "Se Connecter", icon: Login, href: "/login", external: false },
     ];
     const otherNavigationLinks = [
-        { path: "/threads", label: "Threads", icon: Threads, href: "/" },
-        { path: "/plus", label: "Options", icon: Plus, href: "/" },
+        { path: "/threads", label: "Threads", icon: Threads, href: "https://about.instagram.com/fr-fr/threads", external: true },
+        { path: "/plus", label: "Plus", icon: Plus, href: "#plus", external: false, onclick: handlePlusClick},
     ];
 
     const mobileNavigationLinks = [
-        { path: "/", label: "Accueil", icon: Accueil, href: "/" },
-        { path: "/search", label: "Recherche", icon: Recherche, href: "/search" },
-        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/" },
-        { path: "/reels", label: "Reels", icon: Reel, href: "/" },
-        { path: "/msg", label: "Messages", icon: Messages, href: "/" },
-        { path: "/post", label: "Créer", icon: Creer, href: "/post" },
-        { path: "/login", label: "Se Connecter", icon: Login, href: "/login" },
+        { path: "/", label: "Accueil", icon: Accueil, href: "#", external: false },
+        { path: "/search", label: "Recherche", icon: Recherche, href: "/search", external: false  },
+        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "#", external: false },
+        { path: "/reels", label: "Reels", icon: Reel, href: "https://youtu.be/dQw4w9WgXcQ?si=47-VX_Ot32PPuIoZ" , external: true },
+        { path: "/msg", label: "Messages", icon: Messages, href: "#", external: false },
+        { path: "/post", label: "Créer", icon: Creer, href: "/post", external: false },
+        { path: "/login", label: "Se Connecter", icon: Login, href: "/login", external: false },
     ];
 
     return (
@@ -70,12 +85,21 @@ const Layout = () => {
                                     <ul className="grow mt-7 gap-3">
                                         {navigationLinks.map((link) => (
                                         <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
-                                            <Link to={link.href}>
-                                            <div className="py-4 pl-5 flex">
-                                                <div className="inline-block">{React.createElement(link.icon)}</div> 
-                                                <div className="inline-block ml-3">{link.label}</div>
-                                            </div>
-                                            </Link>
+                                            {link.external ? (
+                                                <ExternalLink href={link.href}>
+                                                <div className="py-4 pl-5 flex">
+                                                    <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                    <div className="inline-block ml-3">{link.label}</div>
+                                                </div>
+                                                </ExternalLink>
+                                            ) : (
+                                                <Link to={link.href}>
+                                                <div className="py-4 pl-5 flex">
+                                                    <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                    <div className="inline-block ml-3">{link.label}</div>
+                                                </div>
+                                                </Link>
+                                            )}
                                         </li>
                                         ))}
                                     </ul>
@@ -84,12 +108,21 @@ const Layout = () => {
                                     <ul className="mb-5">
                                         {otherNavigationLinks.map((link) => (
                                         <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
-                                            <Link to={link.href}>
-                                            <div className="py-4 pl-5 flex">
-                                                <div className="inline-block">{React.createElement(link.icon)}</div> 
-                                                <div className="inline-block ml-3">{link.label}</div>
-                                            </div>
-                                            </Link>
+                                            {link.external ? (
+                                                <ExternalLink href={link.href}>
+                                                <div className="py-4 pl-5 flex">
+                                                    <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                    <div className="inline-block ml-3">{link.label}</div>
+                                                </div>
+                                                </ExternalLink>
+                                            ) : (
+                                                <Link to={link.href} onClick={link.onclick}>
+                                                <div className="py-4 pl-5 flex">
+                                                    <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                    <div className="inline-block ml-3">{link.label}</div>
+                                                </div>
+                                                </Link>
+                                            )}
                                         </li>
                                         ))}
                                     </ul>
@@ -115,11 +148,19 @@ const Layout = () => {
                                     <ul className="grow mt-10 gap-3">
                                         {navigationLinks.map((link) => (
                                         <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
-                                            <Link to={link.href}>
-                                            <div className="py-4 pl-5 flex">
-                                                <div className="inline-block">{React.createElement(link.icon)}</div> 
-                                            </div>
-                                            </Link>
+                                            {link.external ? (
+                                                <ExternalLink href={link.href}>
+                                                <div className="py-4 pl-5 flex">
+                                                    <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                </div>
+                                                </ExternalLink>
+                                            ) : (
+                                                <Link to={link.href}>
+                                                <div className="py-4 pl-5 flex">
+                                                    <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                </div>
+                                                </Link>
+                                            )}
                                         </li>
                                         ))}
                                     </ul>
@@ -128,11 +169,19 @@ const Layout = () => {
                                     <ul className="mb-5">
                                         {otherNavigationLinks.map((link) => (
                                         <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
-                                            <Link to={link.href}>
-                                            <div className="py-4 pl-5 flex">
-                                                <div className="inline-block">{React.createElement(link.icon)}</div> 
-                                            </div>
-                                            </Link>
+                                            {link.external ? (
+                                                <ExternalLink href={link.href}>
+                                                <div className="py-4 pl-5 flex">
+                                                    <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                </div>
+                                                </ExternalLink>
+                                            ) : (
+                                                <Link to={link.href}>
+                                                <div className="py-4 pl-5 flex">
+                                                    <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                </div>
+                                                </Link>
+                                            )}
                                         </li>
                                         ))}
                                     </ul>
@@ -148,17 +197,25 @@ const Layout = () => {
                                 <ul className="flex flex-row my-2 justify-between w-full px-7">
                                     {mobileNavigationLinks.map((link) => (
                                     <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
-                                        <Link to={link.href}>
-                                        <div className="py-3 px-3 flex">
-                                            <div className="inline-block">{React.createElement(link.icon)}</div> 
-                                        </div>
-                                        </Link>
+                                        {link.external ? (
+                                                <ExternalLink href={link.href}>
+                                                <div className="py-3 px-3 flex">
+                                                    <div className="inline-block">{React.createElement(link.icon)}</div> 
+                                                </div>
+                                                </ExternalLink>
+                                            ) : (
+                                                <Link to={link.href}>
+                                                <div className="py-3 px-3 flex">
+                                                    <div className="inline-block">{React.createElement(link.icon)}</div> 
+                                                </div>
+                                                </Link>
+                                            )}
                                     </li>
                                     ))}
                                 </ul>
                         </nav>
                     </div>
-                    
+
                 </header>
 
 
@@ -169,10 +226,57 @@ const Layout = () => {
                     </main>
 
 
-                    <footer className="flex flex-col py-11 z-10 bg-slate-50">
+                    <footer className="flex flex-col py-11 z-10 bg-slate-50 border-t border-slate-300">
                         <p className="text-center">©2024. Site web fortement inspirée d'Instagram. Tout droits réservés.</p>
                     </footer>
                 </div>
+
+
+                {/* Modal */}
+                {showModalPlus && (
+                    <CSSTransition
+                    in={showModalPlus}
+                    timeout={300}
+                    classNames="modal-transition"
+                    unmountOnExit
+                    >
+                    <div className="modalplus fixed justify-center items-center align-center flex w-full min-h-screen bg-gray-600 bg-opacity-50 overflow-y-auto z-50">
+                        <div className="relative px-5 py-16 border w-96 h-fit shadow-lg rounded-md bg-white">
+                            <div className="mt-3 text-center flex flex-col gap-3">
+
+                                <p className="text-xl font-semibold mb-5">Voir plus sur ce site :</p>
+
+
+                                <button className="w-7/12 mx-auto animated-button bg-white bg-slate-200 text-black">
+                                <span>API Commentaires</span>
+                                <span></span>
+                                </button>
+
+                                <button className="w-7/12 mx-auto animated-button bg-white bg-slate-200 text-black">
+                                <span>API Images</span>
+                                <span></span>
+                                </button>
+
+                                <button className="w-7/12 mx-auto animated-button bg-white bg-slate-200 text-black">
+                                <span>API OAuth2</span>
+                                <span></span>
+                                </button>
+
+                            </div>
+                            <div className="mt-8 flex justify-center">
+                                <button
+                                onClick={handleCloseModal}
+                                className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-3 py-2 
+                                bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 
+                                focus:ring-sky-500"
+                                >
+                                Fermer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    </CSSTransition>
+                )}
             </div>
 
         </>
