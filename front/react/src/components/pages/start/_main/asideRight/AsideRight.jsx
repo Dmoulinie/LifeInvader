@@ -5,6 +5,7 @@ import Lucaprofile from "@assets/start/luca.png";
 import Damienprofile from "@assets/start/damien.jpg";
 import Danprofile from "@assets/start/dan.jpg";
 import Nathanprofile from "@assets/start/nathan.png";
+import { Link } from 'react-router-dom';
 
 const AsideRight = () => {
     return (
@@ -18,11 +19,13 @@ const AsideRight = () => {
                 <p className='text-gray-500 text-sm'>Vous</p>
                 </div>
                 <div>
-                <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Follow</a>
+                <Link to="/userpage">
+                    <span className='font-semibold text-sky-500 text-xs hover:text-sky-800 cursor-pointer'>Voir le profil</span>
+                </Link>
                 </div>
             </div>
 
-            <p className='text-sm font-semibold text-gray-500 mb-4 mt-6'>Suggested for you</p>
+            <p className='text-sm font-semibold text-gray-500 mb-4 mt-6'>Suggestions pour vous</p>
 
             <div className='flex flex-col justify-center gap-4'>
 
@@ -35,7 +38,7 @@ const AsideRight = () => {
                     <p className='text-gray-500 text-sm'>Développeur front</p>
                     </div>
                     <div>
-                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Follow</a>
+                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Suivre</a>
                     </div>
                 </div>
 
@@ -48,7 +51,7 @@ const AsideRight = () => {
                     <p className='text-gray-500 text-sm'>Développeur back</p>
                     </div>
                     <div>
-                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Follow</a>
+                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Suivre</a>
                     </div>
                 </div>
 
@@ -61,7 +64,7 @@ const AsideRight = () => {
                     <p className='text-gray-500 text-sm'>Développeur back</p>
                     </div>
                     <div>
-                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Follow</a>
+                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Suivre</a>
                     </div>
                 </div>
 
@@ -74,7 +77,7 @@ const AsideRight = () => {
                     <p className='text-gray-500 text-sm'>Développeur back</p>
                     </div>
                     <div>
-                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Follow</a>
+                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Suivre</a>
                     </div>
                 </div>
 
@@ -87,7 +90,7 @@ const AsideRight = () => {
                     <p className='text-gray-500 text-sm'>Git & Docker</p>
                     </div>
                     <div>
-                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Follow</a>
+                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Suivre</a>
                     </div>
                 </div>
             </div>
