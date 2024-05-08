@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import Logoinsta from "@assets/start/instagram-new.png";
 
@@ -13,126 +13,270 @@ import Recherche from "@assets/start/svg/Recherche.svg?react";
 import Reel from "@assets/start/svg/Reel.svg?react";
 import Threads from "@assets/start/svg/Threads.svg?react";
 import Login from "@assets/start/svg/Login.svg?react";
+import Instamini from "@assets/start/svg/Instamini.svg?react";
+
+import ExternalLink from "./ExternalLink/ExternalLink";
+import { CSSTransition } from 'react-transition-group';
+
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
+import "./Layout.css";
 
 
 const Layout = () => {
+    const [showModalPlus, setShowModalPlus] = useState(false);
+
+    const handleLinkClickPlus = () => {
+        setShowModalPlus(true);
+    };
+    const ClosePlus = () => {
+        setShowModalPlus(false);
+    };
+
     const location = useLocation();
     const linkClasses = {
         default: 'text-gray-500 hover:text-gray-950 hover:bg-gray-100 rounded-md',
         current: 'text-gray-950 bg-gray-100 rounded-md',
     };
 
+    const navigationLinks = [
+        { path: "/", label: "Accueil", icon: Accueil, href: "/", external: false },
+        { path: "/search", label: "Recherche", icon: Recherche, href: "/search", external: false },
+        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/", external: false },
+        { path: "/reels", label: "Reels", icon: Reel, href: "https://youtu.be/dQw4w9WgXcQ?si=47-VX_Ot32PPuIoZ", external: true },
+        { path: "/msg", label: "Messages", icon: Messages, href: "#", external: false },
+        { path: "/notif", label: "Notifications", icon: Notifications, href: "#", external: false },
+        { path: "/post", label: "Créer", icon: Creer, href: "/post", external: false },
+        { path: "/login", label: "Se Connecter", icon: Login, href: "/login", external: false },
+    ];
+    const otherNavigationLinks = [
+        { path: "/threads", label: "Threads", icon: Threads, href: "https://about.instagram.com/fr-fr/threads", external: true },
+        { path: "/plus", label: "Plus", icon: Plus, href: "#plus", external: false, onclick: handleLinkClickPlus },
+    ];
+
+    const mobileNavigationLinks = [
+        { path: "/", label: "Accueil", icon: Accueil, href: "#", external: false },
+        { path: "/search", label: "Recherche", icon: Recherche, href: "/search", external: false },
+        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "#", external: false },
+        { path: "/reels", label: "Reels", icon: Reel, href: "https://youtu.be/dQw4w9WgXcQ?si=47-VX_Ot32PPuIoZ", external: true },
+        { path: "/msg", label: "Messages", icon: Messages, href: "#", external: false },
+        { path: "/post", label: "Créer", icon: Creer, href: "/post", external: false },
+        { path: "/login", label: "Se Connecter", icon: Login, href: "/login", external: false },
+    ];
+
     return (
         <>
             <div className="flex flex-row relative z-20">
+                {/* Dialog Modal */}
+                <Dialog open={showModalPlus} onOpenChange={setShowModalPlus}>
+                    <DialogContent>
+                    <div className="transition-transform duration-500 hover:scale-[1.04] scale-100 relative px-5 py-16 border w-full h-fit shadow-lg rounded-md bg-white mx-auto">
+                                <div className="mt-3 text-center flex flex-col gap-3">
 
-                <header className="flex-none w-[15.4rem] relative z-20 border-r border-slate-300">
-                    <nav className="left-0 pl-2 fixed">
-                        <div className="flex h-screen flex-col w-[14rem]">
-                            <ul>
-                                <li className="text-gray-500 hover:text-gray-950 mt-9 pl-5">
-                                    <Link to="/"><img src={Logoinsta} alt="logoinsta" className="w-[8rem] translate-x-[-1rem]"/></Link>
-                                </li>
-                            </ul>
+                                    <p className="text-xl font-semibold mb-5">Voir plus des autres API :</p>
 
-                            <ul className="grow mt-7 gap-3">
-                                <li className={location.pathname === '/'? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Accueil /></div>
-                                    <div className="inline-block ml-3">Accueil</div>
+                                    <a href="http://localhost:3000" target="_blank" className="w-8/12 mx-auto animated-button bg-white bg-slate-100 text-black">
+                                        <span>API Commentaires</span>
+                                        <span></span>
+                                    </a>
+
+                                    <a href="http://localhost:5000" target="_blank" className="w-8/12 mx-auto animated-button bg-white bg-slate-100 text-black">
+                                        <span>API Images</span>
+                                        <span></span>
+                                    </a>
+
+                                    <a href="http://localhost:8080" target="_blank" className="w-8/12 mx-auto animated-button bg-white bg-slate-100 text-black">
+                                        <span>API OAuth2</span>
+                                        <span></span>
+                                    </a>
+
                                 </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/search'? linkClasses.current : linkClasses.default}>
-                                <Link to="/search">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Recherche /></div>
-                                    <div className="inline-block ml-3">Recherche</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/discovery'? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Decouvrir /></div>
-                                    <div className="inline-block ml-3">Découvrir</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/reels'? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Reel /></div>
-                                    <div className="inline-block ml-3">Reels</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/msg'? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Messages /></div>
-                                    <div className="inline-block ml-3">Messages</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/notif'? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Notifications /></div>
-                                    <div className="inline-block ml-3">Notifications</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/post'? linkClasses.current : linkClasses.default}>
-                                <Link to="/post">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Creer /></div>
-                                    <div className="inline-block ml-3">Creer</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/login' ? linkClasses.current : linkClasses.default}>
-                                <Link to="/login">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Login /></div>
-                                    <div className="inline-block ml-3">Login</div>
-                                    </div>
-                                </Link>
-                                </li>
-                            </ul>
+                                <div className="mt-8 flex justify-center">
+                                    <button
+                                        onClick={ClosePlus}
+                                        className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-3 py-2 
+                                bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 
+                                focus:ring-sky-500"
+                                    >
+                                        Fermer
+                                    </button>
+                                </div>
+                            </div>
+                    </DialogContent>
+                </Dialog>
 
-                            <ul className="mb-5">
-                                <li className={location.pathname === '/threads' ? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Threads /></div>
-                                    <div className="inline-block ml-3">Threads</div>
-                                    </div>
-                                </Link>
-                                </li>
-                                <li className={location.pathname === '/plus' ? linkClasses.current : linkClasses.default}>
-                                <Link to="/">
-                                    <div className="py-4 pl-5 flex">
-                                    <div className="inline-block"><Plus /></div>
-                                    <div className="inline-block ml-3">Plus</div>
-                                    </div>
-                                </Link>
-                                </li>
+                <header className="border-r border-gray-200">
+
+                    { /* Pour écran large */}
+                    <div className="hidden sm:hidden lg:flex flex-none w-[15.4rem] relative z-20 border-r border-slate-300">
+                        <nav className="left-0 pl-2 fixed">
+                            { /* NAVIGATION  */}
+                            <ul className="flex  h-screen flex-col w-[14rem]">
+                                {/* Image / Logo */}
+                                <ul>
+                                    <li className="text-gray-500 hover:text-gray-950 mt-9 pl-5">
+                                        <Link to="/"><img src={Logoinsta} alt="logoinsta" className="w-[8rem] translate-x-[-1rem]" /></Link>
+                                    </li>
+                                </ul>
+
+                                {/* Liens de navigation */}
+                                <ul className="grow mt-7 gap-3">
+                                    {navigationLinks.map((link) => (
+                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                            {link.external ? (
+                                                <ExternalLink href={link.href}>
+                                                    <div className="py-4 pl-5 flex">
+                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                        <div className="inline-block ml-3">{link.label}</div>
+                                                    </div>
+                                                </ExternalLink>
+                                            ) : (
+                                                <Link to={link.href}>
+                                                    <div className="py-4 pl-5 flex">
+                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                        <div className="inline-block ml-3">{link.label}</div>
+                                                    </div>
+                                                </Link>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                {/* Autres de navigation */}
+                                <ul className="mb-5">
+                                    {otherNavigationLinks.map((link) => (
+                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                            {link.external ? (
+                                                <ExternalLink href={link.href}>
+                                                    <div className="py-4 pl-5 flex">
+                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                        <div className="inline-block ml-3">{link.label}</div>
+                                                    </div>
+                                                </ExternalLink>
+                                            ) : (
+                                                <Link to={link.href} onClick={link.onclick}>
+                                                    <div className="py-4 pl-5 flex">
+                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                        <div className="inline-block ml-3">{link.label}</div>
+                                                    </div>
+                                                </Link>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
                             </ul>
-                        </div>
-                    </nav>
+                        </nav>
+                    </div>
+
+                    { /* Pour écran moyen */}
+                    <div className="hidden sm:flex lg:hidden flex-none w-[5rem] relative z-20 border-r border-slate-300">
+                        <nav className="left-0 pl-2 fixed">
+                            { /* NAVIGATION  */}
+                            <ul className="flex  h-screen flex-col w-[4.02rem]">
+                                {/* Image / Logo */}
+                                <ul>
+                                    <li className="text-gray-500 hover:text-gray-950 mt-9 pl-5">
+                                        <Link to="/">
+                                            <Instamini className="w-[4rem] translate-x-[-1.2rem]" />
+                                        </Link>
+                                    </li>
+                                </ul>
+
+                                {/* Liens de navigation */}
+                                <ul className="grow mt-10 gap-3">
+                                    {navigationLinks.map((link) => (
+                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                            {link.external ? (
+                                                <ExternalLink href={link.href}>
+                                                    <div className="py-4 pl-5 flex">
+                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                    </div>
+                                                </ExternalLink>
+                                            ) : (
+                                                <Link to={link.href}>
+                                                    <div className="py-4 pl-5 flex">
+                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                    </div>
+                                                </Link>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                {/* Autres de navigation */}
+                                <ul className="mb-5">
+                                    {otherNavigationLinks.map((link) => (
+                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                            {link.external ? (
+                                                <ExternalLink href={link.href}>
+                                                    <div className="py-4 pl-5 flex">
+                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                    </div>
+                                                </ExternalLink>
+                                            ) : (
+                                                <Link to={link.href}>
+                                                    <div className="py-4 pl-5 flex">
+                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                    </div>
+                                                </Link>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    { /* Pour petit écran (mobile) */}
+                    <div className="flex sm:hidden lg:hidden flex-none relative z-20">
+                        <nav className="flex justify-center bottom-0 fixed w-full bg-white border-t border-slate-300">
+                            { /* NAVIGATION  */}
+                            {/* Liens de navigation pour mobile */}
+                            <ul className="flex flex-row my-2 justify-between w-full px-7">
+                                {mobileNavigationLinks.map((link) => (
+                                    <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                        {link.external ? (
+                                            <ExternalLink href={link.href}>
+                                                <div className="py-3 px-3 flex">
+                                                    <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                </div>
+                                            </ExternalLink>
+                                        ) : (
+                                            <Link to={link.href}>
+                                                <div className="py-3 px-3 flex">
+                                                    <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                </div>
+                                            </Link>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
+                    </div>
+
                 </header>
 
-                <main className='min-h-[100vh] w-full grow'>
-                    <Outlet />
-                </main>
 
+                { /* Le reste du site : */}
+                <div className="grow">
+                    <main className='min-h-[100vh] w-full grow'>
+                        <Outlet />
+                    </main>
+
+
+                    <footer className="flex flex-col py-11 z-10 bg-slate-50 border-t border-slate-300">
+                        <p className="text-center">©2024. Site web fortement inspirée d'Instagram. Tout droits réservés.</p>
+                    </footer>
+                </div>
             </div>
 
-            <footer className="py-10 absolute left-0 right-0 bg-gray-100 z-10">
-                <p className="text-center">Footer</p>
-            </footer>
         </>
     )
 };
