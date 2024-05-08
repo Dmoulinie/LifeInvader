@@ -8,7 +8,7 @@ public class User {
 
     @Id
     private String id;
-    private String name;    
+    private String name;  
     private String node;
     private String avatar;
     private String html;
