@@ -15,13 +15,13 @@ const Login = () => {
         <div className="flex flex-row justify-center items-center min-h-screen">
         <div className="flex flex-col shadow-xl rounded-md"> 
 
-        <div className='flex flex-row'>
-            <div className='bg-coffee w-[45vh] min-h-[45vh] rounded-l'></div>
+        <div className='flex md:flex-row flex-col'>
+            <div className='bg-coffee lg:w-[49vh] lg:min-h-[49vh] w-[39vh] min-h-[39vh] rounded-l'></div>
 
-            <div className='flex flex-col justify-center p-14'>
-                <p className="text-4xl font-bold text-center mb-4">Bienvenue</p>
+            <div className='flex flex-col justify-center md:p-14 p-10'>
+                <p className="md:text-4xl text-2xl font-bold text-center mb-4">Bienvenue</p>
 
-                <p className="text-2xl font-semibold text-center mb-6">Connectez votre compte :</p>
+                <p className="md:text-2xl text-xl font-semibold text-center mb-6">Connectez votre compte :</p>
 
                 <div className="flex flex-col gap-2">
                 <div className="w-11/12 mx-auto bg-black text-white border-2 border-black hover:bg-gray-900 hover:border-gray-900
