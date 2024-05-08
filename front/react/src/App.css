@@ -1,0 +1,3 @@
+* {
+    transition: color 0s, background-color 0.3s, background 0.3s, border-color 0.3s;
+}
