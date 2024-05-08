@@ -80,7 +80,7 @@ const Layout = () => {
                     <div className="transition-transform duration-500 hover:scale-[1.04] scale-100 relative px-5 py-16 border w-full h-fit shadow-lg rounded-md bg-white mx-auto">
                                 <div className="mt-3 text-center flex flex-col gap-3">
 
-                                    <p className="text-xl font-semibold mb-5">Voir plus sur ce site :</p>
+                                    <p className="text-xl font-semibold mb-5">Voir plus des autres API :</p>
 
                                     <a href="http://localhost:3000" target="_blank" className="w-8/12 mx-auto animated-button bg-white bg-slate-100 text-black">
                                         <span>API Commentaires</span>
