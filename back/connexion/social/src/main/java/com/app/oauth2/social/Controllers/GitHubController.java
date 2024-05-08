@@ -1,4 +1,4 @@
-package com.app.oauth2.social.appDemo;
+package com.app.oauth2.social.Controllers;
 
 import java.util.List;
 
@@ -39,9 +39,9 @@ public class GitHubController {
     public String connectWithGitHub() {
         // Redirect the user to GitHub's authorization endpoint
         String authorizationUrl = "https://github.com/login/oauth/authorize" +
-                "?client_id=" + CLIENT_ID +
-                "&redirect_uri=" + REDIRECT_URI +
-                "&scope=user"; // Request user scope
+        "?client_id=" + CLIENT_ID +
+        "&redirect_uri=" + REDIRECT_URI +
+        "&scope=user"; // Request user scope
         return "redirect:" + authorizationUrl;
     }
 
@@ -79,24 +79,25 @@ public class GitHubController {
         JsonNode userDataJson = mapper.readTree(userDataString);
 
         // Keep only wanted data
-        String name = userDataJson.get("login").asText();
         String id = userDataJson.get("id").asText();
+        String name = userDataJson.get("login").asText();
         String node_id = userDataJson.get("node_id").asText();
         String avatar_url = userDataJson.get("avatar_url").asText();
         String html_url = userDataJson.get("html_url").asText();
 
         JsonNode userDataFinal = mapper.createObjectNode()
-            .put("name", name)
             .put("id", id)
+            .put("name", name)
             .put("node_id", node_id)
             .put("avatar_url", avatar_url)
             .put("html_url", html_url);
 
-        // TODO : Stocker les données dans la base de données mongodb : users
-        userRepository.save(new User(name, id, node_id, avatar_url, html_url));
+        // // TODO : Stocker les données dans la base de données mongodb : users
+        userRepository.save(new User(id,name, node_id, avatar_url, html_url));
         
-        
+        // Faire un redirect vers "localhost:5173?id=id"
         return ResponseEntity.ok(userDataFinal);
+
     }
 
 
