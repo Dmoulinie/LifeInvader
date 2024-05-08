@@ -4,7 +4,7 @@ import Kearanprofile from "@assets/start/kearan.jpg";
 import Lucaprofile from "@assets/start/luca.png";
 import Damienprofile from "@assets/start/damien.jpg";
 import Danprofile from "@assets/start/dan.jpg";
-import Nathanprofile from "@assets/start/kearan.jpg";
+import Nathanprofile from "@assets/start/nathan.png";
 
 const AsideRight = () => {
     return (
