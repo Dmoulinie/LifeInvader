@@ -1,5 +1,7 @@
 package com.app.oauth2.social.appDemo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.app.oauth2.social.models.User;
+import com.app.oauth2.social.repositories.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,6 +25,9 @@ public class GitHubController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private UserRepository userRepository;
     // GitHub OAuth callback URL configured in your GitHub app settings
     private static final String REDIRECT_URI = "http://localhost:8080/github/callback";
 
@@ -85,8 +92,9 @@ public class GitHubController {
             .put("avatar_url", avatar_url)
             .put("html_url", html_url);
 
-        // TODO : Stocker les données dans la base de données
-
+        // TODO : Stocker les données dans la base de données mongodb : users
+        userRepository.save(new User(name, id, node_id, avatar_url, html_url));
+        
         
         return ResponseEntity.ok(userDataFinal);
     }
@@ -102,5 +110,14 @@ public class GitHubController {
             }
         }
         return null; // Access token not found
+    }
+
+    @GetMapping("/github/getAllUsers")
+    public List<User> returnAllUsers() {
+        // return all users from the database
+        for (User Album : userRepository.findAll()) {
+            System.out.println(Album);
+        }
+        return userRepository.findAll();
     }
 }
