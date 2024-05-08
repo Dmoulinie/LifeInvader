@@ -53,6 +53,7 @@ const Layout = () => {
             <div className="flex flex-row relative z-20">
 
                 <header className="border-r border-gray-200">
+
                     { /* Pour écran large */ }
                     <div className="hidden sm:hidden lg:flex flex-none w-[15.4rem] relative z-20 border-r border-slate-300">
                         <nav className="left-0 pl-2 fixed">
@@ -143,22 +144,21 @@ const Layout = () => {
                     <div className="flex sm:hidden lg:hidden flex-none relative z-20">
                         <nav className="flex justify-center bottom-0 fixed w-full bg-white border-t border-slate-300">
                             { /* NAVIGATION  */ }
-                                <ul className="flex flex-row my-2 w-full">
-                                    {/* Liens de navigation */}
-                                    <ul className="flex flex-row justify-between w-full px-7">
-                                        {mobileNavigationLinks.map((link) => (
-                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
-                                            <Link to={link.href}>
-                                            <div className="py-3 px-3 flex">
-                                                <div className="inline-block">{React.createElement(link.icon)}</div> 
-                                            </div>
-                                            </Link>
-                                        </li>
-                                        ))}
-                                    </ul>
+                                {/* Liens de navigation pour mobile */}
+                                <ul className="flex flex-row my-2 justify-between w-full px-7">
+                                    {mobileNavigationLinks.map((link) => (
+                                    <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                        <Link to={link.href}>
+                                        <div className="py-3 px-3 flex">
+                                            <div className="inline-block">{React.createElement(link.icon)}</div> 
+                                        </div>
+                                        </Link>
+                                    </li>
+                                    ))}
                                 </ul>
                         </nav>
                     </div>
+                    
                 </header>
 
 
