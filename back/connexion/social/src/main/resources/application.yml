@@ -1,6 +1,11 @@
 # spring.application.name=social
 
 spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27018
+      database: users
   security:
     oauth2:
       client:

@@ -53,12 +53,25 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - dbdata6:/data/db
+      - dbdata_node:/data/db
+    restart: always
+
+
+  mongodb-java:
+    image: mongo:6-jammy
+    networks:
+      - java-network
+    ports:
+      - '27018:27017'
+    volumes:
+      - dbdata_java:/data/db
     restart: always
 
 volumes:
-  dbdata6:
+  dbdata_node:
+  dbdata_java:
   
 networks:
   node-network:
+  java-network:
   
