@@ -12,20 +12,20 @@ public class User {
     private String node;
     private String avatar;
     private String html;
-    private String access_token;
+    private String accesstoken;
 
     // Constructors, getters and setters
     public User() {
 
     }
 
-    public User(String id, String name, String node, String avatar, String html, String access_token) {
+    public User(String id, String name, String node, String avatar, String html, String accesstoken) {
         this.id = id;
         this.name = name;
         this.node = node;
         this.avatar = avatar;
         this.html = html;
-        this.access_token = access_token;
+        this.accesstoken = accesstoken;
     }
 
     public String getId() {
@@ -68,11 +68,11 @@ public class User {
         this.html = html;
     }
 
-    public String getAccess_token() {
-        return access_token;
+    public String getAccesstoken() {
+        return accesstoken;
     }
 
-    public void setAccess_token(String access_token) {
-        this.access_token = access_token;
+    public void setAccesstoken(String accesstoken) {
+        this.accesstoken = accesstoken;
     }
 }
