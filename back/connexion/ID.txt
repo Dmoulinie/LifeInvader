@@ -1,0 +1,4 @@
+Client ID : Iv1.4849f30c8208f619
+Client Secret : b0dee2f7ad96fee5b0e09ef340e19b2db39d8016
+
+https://github.com/login/oauth/authorize?client_id=Iv1.4849f30c8208f619&redirect_uri=http://localhost:8080/github/callback&scope=user
