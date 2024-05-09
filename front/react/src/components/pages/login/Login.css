@@ -1,0 +1,14 @@
+.bg-coffee {
+    background-image: url('@assets/login/coffee.jpg');
+    background-size: cover; /* Ajustez si nécessaire */
+    background-position: center top; /* Ajustez si nécessaire */
+    animation: move-bg 12s ease infinite alternate;
+}
+@keyframes move-bg {
+    from { 
+        background-position: center top; 
+    }
+    to { 
+        background-position: center bottom; 
+    }
+}
