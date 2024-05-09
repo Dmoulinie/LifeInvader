@@ -1,17 +1,34 @@
 version: '3'
 services:
 
-  react-front:
-    build: ./front/react
+######### BASE DE DONNEES #########
+
+  mongodb-node:
+    image: mongo:6-jammy
+    networks:
+      - node-network
     ports:
-     - "5173:5173"
-    depends_on:
-     - mongodb-node
-     - javascript
-    #  - java
-     - python
+      - '27017:27017'
+    volumes:
+      - dbdata_node:/data/db
+    restart: always
 
 
+
+
+  mongodb-java:
+    container_name: mongodb-java
+    image: mongo:6-jammy
+    ports:
+      - '27018:27017'
+    volumes:
+      - dbdata_java:/data/db
+    networks:
+      - java-network
+
+
+
+######### BACK #########
 
   javascript:
     build: ./back/commentaires
@@ -25,16 +42,17 @@ services:
     depends_on:
       - mongodb-node
     
-
-
   java:
+    container_name: java
     build: ./back/connexion
     volumes:
       - ./back/connexion:/home/app
     ports:
       - "8080:8080"
-
-
+    depends_on:
+      - mongodb-java
+    networks:
+      - java-network
 
   python:
     build: ./back/images
@@ -46,32 +64,35 @@ services:
 
 
 
-  mongodb-node:
-    image: mongo:6-jammy
-    networks:
-      - node-network
+######### FRONT #########
+
+  react-front:
+    build: ./front/react
+    # volumes:
+    #   - ./front/react:/app
     ports:
-      - '27017:27017'
-    volumes:
-      - dbdata_node:/data/db
-    restart: always
+     - "5173:5173"
+    depends_on:
+     - mongodb-node
+     - javascript
+     - java
+     - python
 
 
-  mongodb-java:
-    image: mongo:6-jammy
-    networks:
-      - java-network
-    ports:
-      - '27018:27017'
-    volumes:
-      - dbdata_java:/data/db
-    restart: always
+
+
+
+######### NETWORKS #########
+
+
+networks:
+  java-network:
+  node-network:
+
+
+######### VOLUMES #########
+
 
 volumes:
-  dbdata_node:
   dbdata_java:
-  
-networks:
-  node-network:
-  java-network:
-  
+  dbdata_node:
