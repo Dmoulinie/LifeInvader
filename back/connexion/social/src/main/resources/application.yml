@@ -3,7 +3,7 @@
 spring:
   data:
     mongodb:
-      host: localhost
+      host: host.docker.internal
       port: 27018
       database: users
   security:
