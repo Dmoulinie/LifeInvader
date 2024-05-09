@@ -42,3 +42,7 @@ localhost:5173
 
 1. Erreur de connexion à mongoDb par le container springboot
     - Il faut remplacer <b>host:localhost</b> par <b>host:host.docker.internal</b> dans le fichier <b>application.yml</b>
+
+## Notes
+
+1. Utilisation de l'accessToken pour eviter le bruteforce avec id dans l'url (avec la requete get).

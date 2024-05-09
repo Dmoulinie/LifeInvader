@@ -113,4 +113,10 @@ public class GitHubController {
         }
         return userRepository.findAll();
     }
+
+    // do getUserByToken
+    @GetMapping("/github/getUserByToken")
+    public User getUserByToken(@RequestParam("accesstoken") String accesstoken) {
+        return userRepository.findByaccesstoken(accesstoken);
+    }
 }
