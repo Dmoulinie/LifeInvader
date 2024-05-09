@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.app.oauth2.social.models.User;
 import com.app.oauth2.social.repositories.UserRepository;
@@ -35,18 +36,8 @@ public class GitHubController {
     private static final String CLIENT_ID = "Iv1.4849f30c8208f619";
     private static final String CLIENT_SECRET = "b0dee2f7ad96fee5b0e09ef340e19b2db39d8016";
 
-    @GetMapping("/github/connect")
-    public String connectWithGitHub() {
-        // Redirect the user to GitHub's authorization endpoint
-        String authorizationUrl = "https://github.com/login/oauth/authorize" +
-        "?client_id=" + CLIENT_ID +
-        "&redirect_uri=" + REDIRECT_URI +
-        "&scope=user"; // Request user scope
-        return "redirect:" + authorizationUrl;
-    }
-
     @GetMapping("/github/callback")
-    public ResponseEntity<JsonNode> gitHubCallback(@RequestParam("code") String code) throws JsonMappingException, JsonProcessingException {
+    public RedirectView gitHubCallback(@RequestParam("code") String code) throws JsonMappingException, JsonProcessingException {
 
         // Exchange the authorization code for an access token
         String tokenUrl = "https://github.com/login/oauth/access_token" +
@@ -84,19 +75,20 @@ public class GitHubController {
         String node_id = userDataJson.get("node_id").asText();
         String avatar_url = userDataJson.get("avatar_url").asText();
         String html_url = userDataJson.get("html_url").asText();
+        String access_token = accessToken;
 
-        JsonNode userDataFinal = mapper.createObjectNode()
-            .put("id", id)
-            .put("name", name)
-            .put("node_id", node_id)
-            .put("avatar_url", avatar_url)
-            .put("html_url", html_url);
+        // JsonNode userDataFinal = mapper.createObjectNode()
+        //     .put("id", id)
+        //     .put("name", name)
+        //     .put("node_id", node_id)
+        //     .put("avatar_url", avatar_url)
+        //     .put("html_url", html_url);
 
-        // // TODO : Stocker les données dans la base de données mongodb : users
-        userRepository.save(new User(id,name, node_id, avatar_url, html_url));
+        // Stocker les données dans la base de données mongodb : users
+        userRepository.save(new User(id,name, node_id, avatar_url, html_url, access_token));
         
         // Faire un redirect vers "localhost:5173?id=id"
-        return ResponseEntity.ok(userDataFinal);
+        return new RedirectView("http://localhost:5173?token=" + access_token);
 
     }
 
