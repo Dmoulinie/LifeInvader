@@ -37,7 +37,7 @@ public class GitHubController {
     private static final String CLIENT_SECRET = "b0dee2f7ad96fee5b0e09ef340e19b2db39d8016";
 
     @GetMapping("/github/callback")
-    public String gitHubCallback(@RequestParam("code") String code) throws JsonMappingException, JsonProcessingException {
+    public RedirectView gitHubCallback(@RequestParam("code") String code) throws JsonMappingException, JsonProcessingException {
 
         // Exchange the authorization code for an access token
         String tokenUrl = "https://github.com/login/oauth/access_token" +
@@ -88,8 +88,7 @@ public class GitHubController {
         userRepository.save(new User(id,name, node_id, avatar_url, html_url, access_token));
         
         // Faire un redirect vers "localhost:5173?id=id"
-        return "test";
-        // return new RedirectView("http://localhost:5173?token=" + access_token);
+        return new RedirectView("http://localhost:5173?token=" + access_token);
 
     }
 
