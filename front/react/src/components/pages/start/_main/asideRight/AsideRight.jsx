@@ -2,7 +2,7 @@ import React from 'react';
 
 import Kearanprofile from "@assets/start/kearan.jpg";
 import Lucaprofile from "@assets/start/luca.png";
-import Damienprofile from "@assets/start/damien.jpg";
+import Damienprofile from "@assets/start/damien.png";
 import Danprofile from "@assets/start/dan.jpg";
 import Nathanprofile from "@assets/start/nathan.png";
 import { Link } from 'react-router-dom';
@@ -51,7 +51,7 @@ const AsideRight = () => {
                     <p className='text-gray-500 text-sm'>Développeur back</p>
                     </div>
                     <div>
-                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Suivre</a>
+                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/profile.php?id=100005294507437' target='_blank'>Suivre</a>
                     </div>
                 </div>
 
@@ -64,7 +64,7 @@ const AsideRight = () => {
                     <p className='text-gray-500 text-sm'>Développeur back</p>
                     </div>
                     <div>
-                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Suivre</a>
+                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/profile.php?id=100009545837510' target='_blank'>Suivre</a>
                     </div>
                 </div>
 
@@ -77,7 +77,7 @@ const AsideRight = () => {
                     <p className='text-gray-500 text-sm'>Développeur back</p>
                     </div>
                     <div>
-                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Suivre</a>
+                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/profile.php?id=100015386593470' target='_blank'>Suivre</a>
                     </div>
                 </div>
 
@@ -90,7 +90,7 @@ const AsideRight = () => {
                     <p className='text-gray-500 text-sm'>Git & Docker</p>
                     </div>
                     <div>
-                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Suivre</a>
+                    <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/dan.moulinie.583' target='_blank'>Suivre</a>
                     </div>
                 </div>
             </div>
