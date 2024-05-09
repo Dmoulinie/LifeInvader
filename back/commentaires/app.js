@@ -20,17 +20,32 @@ const db = mongoose.connection;
 
 
 app.get('/', async(req, res)=>{
-  res.status(200).json({message : 'Status 200 - OK'})
+  res.status(200).json({message : 'Status 200 - OK-'})
 })
 
 app.get("/database", (req, res) => {
-  res.send("Database is OK");
+  /**
+  * Connection ready state
+  *
+  * - 0 = disconnected
+  * - 1 = connected
+  * - 2 = connecting
+  * - 3 = disconnecting
+  * - 99 = uninitialized
+  */
+  res.send("Database status: " + db.readyState);
+});
+
+// Vérification de la connexion à MongoDB
+db.on('error', console.error.bind(console, 'Erreur de connexion à MongoDB:'));
+db.once('open', () => {
+  console.log('Connecté à la base de données MongoDB');
 });
 
 
 // Modèle de schéma pour les commentaires
 const commentSchema = new mongoose.Schema({
-  commentId: mongoose.Schema.Types.ObjectId, // Ajout d'un ID pour les commentaires
+  _id: mongoose.Schema.Types.ObjectId, // Ajout d'un ID pour les commentaires (MongoDB le fait automatiquement)
   postId: Number,
   authorId: Number,
   content: String,
@@ -42,7 +57,7 @@ const Comment = mongoose.model('Comment', commentSchema);
 // Route pour créer un nouveau commentaire
 app.post('/comments/add', async (req, res) => {
   try {
-    const { postId, authorId, content } = req.body; // Correction de la variable authorID en authorId
+    const { postId, authorId, content } = req.body;
     const newComment = new Comment({ postId, authorId, content });
     const savedComment = await newComment.save();
     res.status(201).json(savedComment);
@@ -52,8 +67,19 @@ app.post('/comments/add', async (req, res) => {
   }
 });
 
+// Route pour obtenir tous les commentaires
+app.get('/comments/get-all', async (req, res) => {
+  try {
+    const comments = await Comment.find();
+    res.json(comments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erreur lors de la récupération des commentaires' });
+  }
+});
+
 // Route pour obtenir les commentaires d'un post spécifique
-app.get('/comments/get-from-post/:postId', async (req, res) => {
+app.get('/comments/get-all-from-post/:postId', async (req, res) => {
   try {
     const postId = req.params.postId;
     const comments = await Comment.find({ postId });
@@ -64,11 +90,23 @@ app.get('/comments/get-from-post/:postId', async (req, res) => {
   }
 });
 
-// Route pour supprimer un commentaire par son ID
-app.delete('/comments/delete/:commentId', async (req, res) => {
+// Route pour obtenir les commentaires d'un auteur spécifique
+app.get('/comments/get-all-from-author/:authorId', async (req, res) => {
   try {
-    const commentId = req.params.commentId;
-    const deletedComment = await Comment.findByIdAndDelete(commentId);
+    const authorId = req.params.authorId;
+    const comments = await Comment.find({ authorId });
+    res.json(comments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erreur lors de la récupération des commentaires' });
+  }
+});
+
+// Route pour supprimer un commentaire par son ID
+app.delete('/comments/delete/:_id', async (req, res) => {
+  try {
+    const _id = req.params._id;
+    const deletedComment = await Comment.findByIdAndDelete(_id);
     if (!deletedComment) {
       return res.status(404).json({ message: 'Commentaire non trouvé' });
     }
