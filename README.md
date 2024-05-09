@@ -31,13 +31,8 @@ localhost:5173
 
 |  Type |   Langage   |  Framework  |    Port     | Base de données | Ports de la BDD |
 | :---: | :---------: | :---------: |:----------: | :-------------: | :-------------: |
-<<<<<<< Updated upstream
-| Front |  Typescript |    React    |    5173     |        X        |        X        |
-| Back  |     Java    |  Springboot |    8080     |      MySQL      |    A définir    |
-=======
 | Front |  Javascript |    React    |    5173     |        X        |        X        |
 | Back  |     Java    |  Springboot |    8080     |      MongoDB    |  27018 : 27017  |
->>>>>>> Stashed changes
 | Back  |    Node.js  |   Express   |    3000     |     MongoDB     |  27017 : 27017  |
 | Back  |    Python   |    Flask    |    5000     |    A définir    |    A définir    |
 
