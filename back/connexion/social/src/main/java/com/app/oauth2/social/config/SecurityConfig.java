@@ -1,4 +1,4 @@
-package com.app.oauth2.social.security;
+package com.app.oauth2.social.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
