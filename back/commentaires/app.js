@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 // Initialisation de l'application Express
 const app = express()
 const PORT = 3000;
-const HOST = '0.0.0.0'
+const HOST = 'localhost'
 
 // Configuration de bodyParser pour analyser les corps de requête JSON
 app.use(bodyParser.json());

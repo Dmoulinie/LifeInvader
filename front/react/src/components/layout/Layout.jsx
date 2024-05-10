@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import Logoinsta from "@assets/start/instagram-new.png";
 
@@ -15,102 +15,83 @@ import Threads from "@assets/start/svg/Threads.svg?react";
 import Login from "@assets/start/svg/Login.svg?react";
 import Instamini from "@assets/start/svg/Instamini.svg?react";
 
+// external links
 import ExternalLink from "./ExternalLink/ExternalLink";
 
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
+// modals
+import ModalPlus from "./modals/modalplus/ModalPlus";
+import ModalMessage from "./modals/modalmsg/ModalMessage";
+
+// Session js
+import { getUserInfo } from './Sessions';
 
 import "./Layout.css";
 
 
 const Layout = () => {
-    const [showModalPlus, setShowModalPlus] = useState(false);
-
-    const handleLinkClickPlus = () => {
-        setShowModalPlus(true);
-    };
-    const ClosePlus = () => {
-        setShowModalPlus(false);
-    };
-
     const location = useLocation();
     const linkClasses = {
         default: 'text-gray-500 hover:text-gray-950 hover:bg-gray-100 rounded-md',
         current: 'text-gray-950 bg-gray-100 rounded-md',
     };
 
+    const [showModalPlus, setShowModalPlus] = useState(false);
+    const handleOpenPlus = () => {
+        setShowModalPlus(!showModalPlus);
+    };
+    const [showModalMsg, setShowModalMsg] = useState(false);
+    const handleOpenMsg = () => {
+        setShowModalMsg(!showModalMsg);
+    };
+
     const navigationLinks = [
-        { path: "/", label: "Accueil", icon: Accueil, href: "/", external: false },
-        { path: "/search", label: "Recherche", icon: Recherche, href: "/search", external: false },
-        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/", external: false },
-        { path: "/reels", label: "Reels", icon: Reel, href: "https://youtu.be/dQw4w9WgXcQ?si=47-VX_Ot32PPuIoZ", external: true },
-        { path: "/msg", label: "Messages", icon: Messages, href: "#", external: false },
-        { path: "/notif", label: "Notifications", icon: Notifications, href: "#", external: false },
-        { path: "/post", label: "Créer", icon: Creer, href: "/post", external: false },
-        { path: "/login", label: "Se Connecter", icon: Login, href: "/login", external: false },
+        { path: "/", label: "Accueil", icon: Accueil, href: "/", external: false, onclick: null},
+        { path: "/search", label: "Recherche", icon: Recherche, href: "/search", external: false, onclick: null},
+        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/", external: false, onclick: null },
+        { path: "/reels", label: "Reels", icon: Reel, href: "https://youtu.be/dQw4w9WgXcQ?si=47-VX_Ot32PPuIoZ", external: true, onclick: null},
+        { path: "/msg", label: "Messages", icon: Messages, href: "#", external: false, onclick: handleOpenMsg },
+        { path: "/notif", label: "Notifications", icon: Notifications, href: "#", external: false, onclick: handleOpenPlus },
+        { path: "/post", label: "Créer", icon: Creer, href: "/post", external: false, onclick: null },
+        { path: "/login", label: "Se Connecter", icon: Login, href: "/login", external: false, onclick: null },
     ];
     const otherNavigationLinks = [
-        { path: "/threads", label: "Threads", icon: Threads, href: "https://about.instagram.com/fr-fr/threads", external: true },
-        { path: "/plus", label: "Plus", icon: Plus, href: "#plus", external: false, onclick: handleLinkClickPlus },
+        { path: "/threads", label: "Threads", icon: Threads, href: "https://about.instagram.com/fr-fr/threads", external: true, onclick: null },
+        { path: "/plus", label: "Plus", icon: Plus, href: "#plus", external: false, onclick: handleOpenPlus },
     ];
 
     const mobileNavigationLinks = [
-        { path: "/", label: "Accueil", icon: Accueil, href: "#", external: false },
-        { path: "/search", label: "Recherche", icon: Recherche, href: "/search", external: false },
-        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "#", external: false },
-        { path: "/reels", label: "Reels", icon: Reel, href: "https://youtu.be/dQw4w9WgXcQ?si=47-VX_Ot32PPuIoZ", external: true },
-        { path: "/msg", label: "Messages", icon: Messages, href: "#", external: false },
-        { path: "/post", label: "Créer", icon: Creer, href: "/post", external: false },
-        { path: "/login", label: "Se Connecter", icon: Login, href: "/login", external: false },
+        { path: "/", label: "Accueil", icon: Accueil, href: "/", external: false, onclick: null },
+        { path: "/search", label: "Recherche", icon: Recherche, href: "/search", external: false, onclick: null },
+        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/", external: false, onclick: null },
+        { path: "/reels", label: "Reels", icon: Reel, href: "https://youtu.be/dQw4w9WgXcQ?si=47-VX_Ot32PPuIoZ", external: true, onclick: null },
+        { path: "/msg", label: "Messages", icon: Messages, href: "/", external: false, onclick: handleOpenMsg },
+        { path: "/post", label: "Créer", icon: Creer, href: "/post", external: false, onclick: null},
+        { path: "/login", label: "Se Connecter", icon: Login, href: "/login", external: false, onclick: null },
     ];
+
+    // Get user data
+    const [userData, setUserData] = useState(null);
+    useEffect(() => {
+      const accessToken = new URLSearchParams(window.location.search).get('token');
+      if (accessToken) {
+        getUserInfo(accessToken).then((userData) => {
+          setUserData(userData);
+        });
+      }
+    }, []);
+
 
     return (
         <>
             <div className="flex flex-row relative z-20">
-                {/* Dialog Modal */}
-                <Dialog open={showModalPlus} onOpenChange={setShowModalPlus}>
-                    <DialogContent>
-                        <div className="transition-transform duration-500 hover:scale-[1.04] scale-100 relative px-5 py-16 border w-full h-fit shadow-lg rounded-md bg-white mx-auto">
-                            <div className="mt-3 text-center flex flex-col gap-3">
-
-                                <p className="text-xl font-semibold mb-5">Voir plus des autres API :</p>
-
-                                <a href="http://localhost:3000" target="_blank" className="w-8/12 mx-auto animated-button bg-slate-200 text-black">
-                                    <span>API Commentaires</span>
-                                    <span></span>
-                                </a>
-
-                                <a href="http://localhost:5000" target="_blank" className="w-8/12 mx-auto animated-button bg-slate-200 text-black">
-                                    <span>API Images</span>
-                                    <span></span>
-                                </a>
-
-                                <a href="http://localhost:8080" target="_blank" className="w-8/12 mx-auto animated-button bg-slate-200 text-black">
-                                    <span>API OAuth2</span>
-                                    <span></span>
-                                </a>
-
-                            </div>
-                            <div className="mt-8 flex justify-center">
-                                <button
-                                    onClick={ClosePlus}
-                                    className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-3 py-2 
-                                bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 
-                                focus:ring-sky-500"
-                                >
-                                    Fermer
-                                </button>
-                            </div>
-                        </div>
-                    </DialogContent>
-                </Dialog>
-
+                <div>
+                {userData && (
+                    <div>
+                    <h1>Welcome, {userData.name}!</h1>
+                    <p>Your GitHub username is {userData.login}.</p>
+                    </div>
+                )}
+                </div>
                 <header className="border-r border-gray-200">
 
                     { /* Pour écran large */}
@@ -137,7 +118,7 @@ const Layout = () => {
                                                     </div>
                                                 </ExternalLink>
                                             ) : (
-                                                <Link to={link.href}>
+                                                <Link to={link.href} onClick={link.onclick}>
                                                     <div className="py-4 pl-5 flex">
                                                         <div className="inline-block">{React.createElement(link.icon)}</div>
                                                         <div className="inline-block ml-3">{link.label}</div>
@@ -199,7 +180,7 @@ const Layout = () => {
                                                     </div>
                                                 </ExternalLink>
                                             ) : (
-                                                <Link to={link.href}>
+                                                <Link to={link.href} onClick={link.onclick}>
                                                     <div className="py-4 pl-5 flex">
                                                         <div className="inline-block">{React.createElement(link.icon)}</div>
                                                     </div>
@@ -220,7 +201,7 @@ const Layout = () => {
                                                     </div>
                                                 </ExternalLink>
                                             ) : (
-                                                <Link to={link.href}>
+                                                <Link to={link.href} onClick={link.onclick}>
                                                     <div className="py-4 pl-5 flex">
                                                         <div className="inline-block">{React.createElement(link.icon)}</div>
                                                     </div>
@@ -248,7 +229,7 @@ const Layout = () => {
                                                 </div>
                                             </ExternalLink>
                                         ) : (
-                                            <Link to={link.href}>
+                                            <Link to={link.href} onClick={link.onclick}>
                                                 <div className="py-3 px-3 flex">
                                                     <div className="inline-block">{React.createElement(link.icon)}</div>
                                                 </div>
@@ -274,6 +255,10 @@ const Layout = () => {
                         <p className="text-center">©2024. Site web fortement inspirée d'Instagram. Tout droits réservés.</p>
                     </footer>
                 </div>
+
+                {/* Modals */}
+                <ModalMessage showModalPlus={showModalMsg} setShowModalPlus={setShowModalMsg} closeModalPlus={handleOpenMsg}/>
+                <ModalPlus showModalPlus={showModalPlus} setShowModalPlus={setShowModalPlus} closeModalPlus={handleOpenPlus}/>
             </div>
 
         </>
