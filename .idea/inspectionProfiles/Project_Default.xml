@@ -1,0 +1,58 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="W605" />
+          <option value="E501" />
+          <option value="E127" />
+          <option value="E129" />
+          <option value="E128" />
+          <option value="E722" />
+          <option value="E701" />
+          <option value="E222" />
+          <option value="E261" />
+          <option value="E305" />
+          <option value="E721" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N802" />
+          <option value="N806" />
+          <option value="N803" />
+          <option value="N801" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyShadowingBuiltinsInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredNames">
+        <list>
+          <option value="map" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyShadowingNamesInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyTypeCheckerInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="pygame.sprite.Sprite.sprite_type" />
+          <option value="pygame.sprite.Sprite.get_damage" />
+          <option value="pygame.sprite.Sprite.enemy_update" />
+          <option value="str.__truediv__" />
+          <option value="pygame.sprite.Sprite.collide_circle" />
+          <option value="pygame.sprite.Sprite.radius" />
+          <option value="pygame.sprite.Sprite.vel_y" />
+          <option value="pygame.sprite.Sprite.vel_x" />
+          <option value="str.collidepoint" />
+          <option value="pygame.sprite.Sprite.score" />
+          <option value="pygame.sprite.Sprite.name" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
