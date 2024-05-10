@@ -7,7 +7,7 @@ import Start from './components/pages/start/Start'
 import Post from './components/pages/post/Post'
 import Search from './components/pages/search/Search'
 import Login from './components/pages/login/Login'
-import User from './components/pages/user/userpage'
+import User from './components/pages/user/Userpage'
 import NoPage from './components/pages/nopage/NoPage'
 import './App.css'
 

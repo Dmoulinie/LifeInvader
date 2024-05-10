@@ -6,7 +6,6 @@ import EyeSlash from "@assets/post/svg/eyeslash.svg?react";
 import { v4 as uuidv4 } from 'uuid';
 
 import "./Post.css";
-import { Description } from '@radix-ui/react-dialog';
 
 const Post = () => {
   const [selectedFile, setSelectedFile] = useState(null);  
@@ -69,7 +68,7 @@ const Post = () => {
             </div>
 
             {/* Boutons pour afficher/masquer l'aperçu */}
-            <div className="relative block left-10 bottom-1 text-gray-500"> {/* Ajout d'un conteneur flex pour les boutons */}
+            <div className="relative block left-5 bottom-1 text-gray-500"> {/* Ajout d'un conteneur flex pour les boutons */}
             <button type="button" onClick={togglePreview} className="w-6 h-6 inline absolute"> {/* Bouton pour afficher l'aperçu */}
                 <EyeSlash className={`ey  fill-slate-400 ${previewVisible ? 'hidden' : 'block'}`} /> {/* Afficher l'oeil ouvert si l'aperçu est masqué */}
             </button>
@@ -81,8 +80,8 @@ const Post = () => {
 
 
         {selectedFile && previewVisible &&  ( // Affiche l'aperçu de l'image si un fichier est sélectionné
-          <div className="image-preview">
-              <p className="text-sm text-center text-gray-500 mb-2 italic">Prévisualisation de l'image :</p>
+          <div className="image-preview flex flex-col justify-center align-center items-center">
+              <p className="text-sm text-center text-gray-500 mb-2 italic">Prévisualisation de l'image <br/>qui sera publiée (format 1:1 - square) :</p>
             {/* <img className='w-[14rem] rounded-lg aspect-square' src={URL.createObjectURL(selectedFile)} alt="Aperçu" />  */}
 
             <div className="image-preview w-[13rem] h-[13rem] rounded-lg bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${URL.createObjectURL(selectedFile)})` }}>
