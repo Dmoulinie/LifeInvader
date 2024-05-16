@@ -34,16 +34,27 @@ const Post = () => {
     const imageData = {
         id: uuidv4(), // Générer un ID unique
         name: selectedFile.name,
-        username: 'utilisateurConnecté', // Remplacez par le nom d'utilisateur réel
+        username: 'admin', // Remplacez par le nom d'utilisateur réel
         size: selectedFile.size,
         type: selectedFile.type,
         date: new Date().getTime(),
         description: description, // Ajouter la description
     };
 
-    // Ici, vous pouvez gérer l'envoi du formulaire et de l'image
-    console.log('Nom du fichier :', selectedFile.name);
-    console.log('Données de l\'image :', imageData);
+    const formData = new FormData();
+    formData.append('image', selectedFile);
+    formData.append('data', JSON.stringify(imageData));
+
+    fetch('http://localhost:5000/api/addimage', {
+      method: 'POST',
+      body: formData,
+      header: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
   };
 
   return (
