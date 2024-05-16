@@ -14,6 +14,7 @@ import Reel from "@assets/start/svg/Reel.svg?react";
 import Threads from "@assets/start/svg/Threads.svg?react";
 import Login from "@assets/start/svg/Login.svg?react";
 import Instamini from "@assets/start/svg/Instamini.svg?react";
+import Logout from "@assets/start/svg/Logout.svg?react"
 
 // external links
 import ExternalLink from "./ExternalLink/ExternalLink";
@@ -52,7 +53,6 @@ const Layout = () => {
         { path: "/msg", label: "Messages", icon: Messages, href: "#", external: false, onclick: handleOpenMsg },
         { path: "/notif", label: "Notifications", icon: Notifications, href: "#", external: false, onclick: handleOpenPlus },
         { path: "/post", label: "Créer", icon: Creer, href: "/post", external: false, onclick: null },
-        { path: "/login", label: "Se Connecter", icon: Login, href: "/login", external: false, onclick: null },
     ];
     const otherNavigationLinks = [
         { path: "/threads", label: "Threads", icon: Threads, href: "https://about.instagram.com/fr-fr/threads", external: true, onclick: null },
@@ -61,37 +61,33 @@ const Layout = () => {
 
     const mobileNavigationLinks = [
         { path: "/", label: "Accueil", icon: Accueil, href: "/", external: false, onclick: null },
-        { path: "/search", label: "Recherche", icon: Recherche, href: "/search", external: false, onclick: null },
-        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/", external: false, onclick: null },
         { path: "/reels", label: "Reels", icon: Reel, href: "https://youtu.be/dQw4w9WgXcQ?si=47-VX_Ot32PPuIoZ", external: true, onclick: null },
         { path: "/msg", label: "Messages", icon: Messages, href: "/", external: false, onclick: handleOpenMsg },
         { path: "/post", label: "Créer", icon: Creer, href: "/post", external: false, onclick: null},
-        { path: "/login", label: "Se Connecter", icon: Login, href: "/login", external: false, onclick: null },
     ];
 
     // Get user data
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState(null); // store user data
     useEffect(() => {
-      const accessToken = new URLSearchParams(window.location.search).get('token');
-      if (accessToken) {
-        getUserInfo(accessToken).then((userData) => {
-          setUserData(userData);
-        });
-      }
+        const accessToken = new URLSearchParams(window.location.search).get('token');
+        if (accessToken) {
+            getUserInfo(accessToken).then((userData) => {
+                setUserData(userData);
+                // store in local storage :
+                localStorage.setItem('items', JSON.stringify(userData));
+            });
+        }
     }, []);
 
+    const logout = () => {
+        localStorage.removeItem('items');
+        setUserData(null);
+    };
 
     return (
         <>
             <div className="flex flex-row relative z-20">
-                <div>
-                {userData && (
-                    <div>
-                    <h1>Welcome, {userData.name}!</h1>
-                    <p>Your GitHub username is {userData.login}.</p>
-                    </div>
-                )}
-                </div>
+
                 <header className="border-r border-gray-200">
 
                     { /* Pour écran large */}
@@ -100,57 +96,96 @@ const Layout = () => {
                             { /* NAVIGATION  */}
                             <ul className="flex  h-screen flex-col w-[14rem]">
                                 {/* Image / Logo */}
-                                <ul>
-                                    <li className="text-gray-500 hover:text-gray-950 mt-9 pl-5">
-                                        <Link to="/"><img src={Logoinsta} alt="logoinsta" className="w-[8rem] translate-x-[-1rem]" /></Link>
-                                    </li>
-                                </ul>
+                                <li>
+                                    <ul>
+                                        <li className="text-gray-500 hover:text-gray-950 mt-9 pl-5">
+                                            <Link to="/"><img src={Logoinsta} alt="logoinsta" className="w-[8rem] translate-x-[-1rem]" /></Link>
+                                        </li>
+                                    </ul>
+                                </li>
 
                                 {/* Liens de navigation */}
-                                <ul className="grow mt-7 gap-3">
-                                    {navigationLinks.map((link) => (
-                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
-                                            {link.external ? (
-                                                <ExternalLink href={link.href}>
+                                <li className="grow mt-7 gap-3">
+                                    <ul>
+                                        {navigationLinks.map((link) => (
+                                            <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                                {link.external ? (
+                                                    <ExternalLink href={link.href}>
+                                                        <div className="py-4 pl-5 flex">
+                                                            <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                            <div className="inline-block ml-3">{link.label}</div>
+                                                        </div>
+                                                    </ExternalLink>
+                                                ) : (
+                                                    <Link to={link.href} onClick={link.onclick}>
+                                                        <div className="py-4 pl-5 flex">
+                                                            <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                            <div className="inline-block ml-3">{link.label}</div>
+                                                        </div>
+                                                    </Link>
+                                                )}
+                                            </li>
+                                        ))}
+
+                                        { /* Si l'utilisateur est connecté, afficher le lien de profil */ }
+                                        {userData && (
+                                            <>
+                                            <li className={linkClasses.default}>
+                                                <Link to="/userpage">
                                                     <div className="py-4 pl-5 flex">
-                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
-                                                        <div className="inline-block ml-3">{link.label}</div>
-                                                    </div>
-                                                </ExternalLink>
-                                            ) : (
-                                                <Link to={link.href} onClick={link.onclick}>
-                                                    <div className="py-4 pl-5 flex">
-                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
-                                                        <div className="inline-block ml-3">{link.label}</div>
+                                                        <div className="inline-block">{React.createElement(Login)}</div>
+                                                        <div className="inline-block ml-3">Profil</div>
                                                     </div>
                                                 </Link>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
+                                            </li>
+                                            <li className={linkClasses.default}>
+                                                <Link to="/" onClick={logout}>
+                                                    <div className="py-4 pl-5 flex">
+                                                        <div className="inline-block"><Logout /></div>
+                                                        <div className="inline-block ml-3">Se déconnecter</div>
+                                                    </div>
+                                                </Link>
+                                            </li>
+                                            </>
+                                        )} 
+                                        { /* Si l'utilisateur n'est pas connecté, afficher le bouton Login */ }
+                                        {!userData && (
+                                            <li className={linkClasses.default}>
+                                                <Link to="/login">
+                                                    <div className="py-4 pl-5 flex">
+                                                        <div className="inline-block">{React.createElement(Login)}</div>
+                                                        <div className="inline-block ml-3">Se connecter</div>
+                                                    </div>
+                                                </Link>
+                                            </li>
+                                        )} 
+                                    </ul>
+                                </li>
 
                                 {/* Autres de navigation */}
-                                <ul className="mb-5">
-                                    {otherNavigationLinks.map((link) => (
-                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
-                                            {link.external ? (
-                                                <ExternalLink href={link.href}>
-                                                    <div className="py-4 pl-5 flex">
-                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
-                                                        <div className="inline-block ml-3">{link.label}</div>
-                                                    </div>
-                                                </ExternalLink>
-                                            ) : (
-                                                <Link to={link.href} onClick={link.onclick}>
-                                                    <div className="py-4 pl-5 flex">
-                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
-                                                        <div className="inline-block ml-3">{link.label}</div>
-                                                    </div>
-                                                </Link>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
+                                <li className="mb-5">
+                                    <ul>
+                                        {otherNavigationLinks.map((link) => (
+                                            <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                                {link.external ? (
+                                                    <ExternalLink href={link.href}>
+                                                        <div className="py-4 pl-5 flex">
+                                                            <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                            <div className="inline-block ml-3">{link.label}</div>
+                                                        </div>
+                                                    </ExternalLink>
+                                                ) : (
+                                                    <Link to={link.href} onClick={link.onclick}>
+                                                        <div className="py-4 pl-5 flex">
+                                                            <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                            <div className="inline-block ml-3">{link.label}</div>
+                                                        </div>
+                                                    </Link>
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -161,55 +196,91 @@ const Layout = () => {
                             { /* NAVIGATION  */}
                             <ul className="flex  h-screen flex-col w-[4.02rem]">
                                 {/* Image / Logo */}
-                                <ul>
-                                    <li className="text-gray-500 hover:text-gray-950 mt-9 pl-5">
-                                        <Link to="/">
-                                            <Instamini className="w-[4rem] translate-x-[-1.2rem]" />
-                                        </Link>
-                                    </li>
-                                </ul>
+                                <li>
+                                    <ul>
+                                        <li className="text-gray-500 hover:text-gray-950 mt-9 pl-5">
+                                            <Link to="/">
+                                                <Instamini className="w-[4rem] translate-x-[-1.2rem]" />
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </li>
 
                                 {/* Liens de navigation */}
-                                <ul className="grow mt-10 gap-3">
-                                    {navigationLinks.map((link) => (
-                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
-                                            {link.external ? (
-                                                <ExternalLink href={link.href}>
+                                <li className="grow mt-10 gap-3">
+                                    <ul>
+                                        {navigationLinks.map((link) => (
+                                            <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                                {link.external ? (
+                                                    <ExternalLink href={link.href}>
+                                                        <div className="py-4 pl-5 flex">
+                                                            <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                        </div>
+                                                    </ExternalLink>
+                                                ) : (
+                                                    <Link to={link.href} onClick={link.onclick}>
+                                                        <div className="py-4 pl-5 flex">
+                                                            <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                        </div>
+                                                    </Link>
+                                                )}
+                                            </li>
+                                        ))}
+
+{ /* Si l'utilisateur est connecté, afficher le lien de profil */ }
+                                        {userData && (
+                                            <>
+                                            <li className={linkClasses.default}>
+                                                <Link to="/userpage">
                                                     <div className="py-4 pl-5 flex">
-                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
-                                                    </div>
-                                                </ExternalLink>
-                                            ) : (
-                                                <Link to={link.href} onClick={link.onclick}>
-                                                    <div className="py-4 pl-5 flex">
-                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                        <div className="inline-block">{React.createElement(Login)}</div>
                                                     </div>
                                                 </Link>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
+                                            </li>
+                                            <li className={linkClasses.default}>
+                                                <Link to="/" onClick={logout}>
+                                                    <div className="py-4 pl-5 flex">
+                                                        <div className="inline-block"><Logout /></div>
+                                                    </div>
+                                                </Link>
+                                            </li>
+                                            </>
+                                        )} 
+                                        { /* Si l'utilisateur n'est pas connecté, afficher le bouton Login */ }
+                                        {!userData && (
+                                            <li className={linkClasses.default}>
+                                                <Link to="/login">
+                                                    <div className="py-4 pl-5 flex">
+                                                        <div className="inline-block">{React.createElement(Login)}</div>
+                                                    </div>
+                                                </Link>
+                                            </li>
+                                        )} 
+                                    </ul>
+                                </li>
 
                                 {/* Autres de navigation */}
-                                <ul className="mb-5">
-                                    {otherNavigationLinks.map((link) => (
-                                        <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
-                                            {link.external ? (
-                                                <ExternalLink href={link.href}>
-                                                    <div className="py-4 pl-5 flex">
-                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
-                                                    </div>
-                                                </ExternalLink>
-                                            ) : (
-                                                <Link to={link.href} onClick={link.onclick}>
-                                                    <div className="py-4 pl-5 flex">
-                                                        <div className="inline-block">{React.createElement(link.icon)}</div>
-                                                    </div>
-                                                </Link>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
+                                <li className="mb-5">
+                                    <ul>
+                                        {otherNavigationLinks.map((link) => (
+                                            <li key={link.path} className={location.pathname === link.path ? linkClasses.current : linkClasses.default}>
+                                                {link.external ? (
+                                                    <ExternalLink href={link.href}>
+                                                        <div className="py-4 pl-5 flex">
+                                                            <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                        </div>
+                                                    </ExternalLink>
+                                                ) : (
+                                                    <Link to={link.href} onClick={link.onclick}>
+                                                        <div className="py-4 pl-5 flex">
+                                                            <div className="inline-block">{React.createElement(link.icon)}</div>
+                                                        </div>
+                                                    </Link>
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -237,6 +308,36 @@ const Layout = () => {
                                         )}
                                     </li>
                                 ))}
+
+{ /* Si l'utilisateur est connecté, afficher le lien de profil */ }
+                                {userData && (
+                                    <>
+                                    <li className={linkClasses.default}>
+                                        <Link to="/userpage">
+                                            <div className="py-3 px-3 flex">
+                                                <div className="inline-block">{React.createElement(Login)}</div>
+                                            </div>
+                                        </Link>
+                                    </li>
+                                    <li className={linkClasses.default}>
+                                        <Link to="/" onClick={logout}>
+                                            <div className="py-3 px-3 flex">
+                                                <div className="inline-block"><Logout /></div>
+                                            </div>
+                                        </Link>
+                                    </li>
+                                    </>
+                                )} 
+                                { /* Si l'utilisateur n'est pas connecté, afficher le bouton Login */ }
+                                {!userData && (
+                                    <li className={linkClasses.default}>
+                                        <Link to="/login">
+                                            <div className="py-3 px-3 flex">
+                                                <div className="inline-block">{React.createElement(Login)}</div>
+                                            </div>
+                                        </Link>
+                                    </li>
+                                )} 
                             </ul>
                         </nav>
                     </div>
@@ -247,6 +348,14 @@ const Layout = () => {
                 { /* Le reste du site : */}
                 <div className="grow">
                     <main className='min-h-[100vh] w-full grow'>
+                    <div>
+                {userData && (
+                    <div>
+                    <h1>Welcome, {userData.name}!</h1>
+                    <p>Your GitHub username is {userData.login}.</p>
+                    </div>
+                )}
+                </div>
                         <Outlet />
                     </main>
 
