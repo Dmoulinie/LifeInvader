@@ -27,7 +27,10 @@ import ModalMessage from "./modals/modalmsg/ModalMessage";
 import { getUserInfo } from './Sessions';
 
 import "./Layout.css";
+import ModalUser from "./modals/modaluser/ModalUser";
 
+// Contexte
+import { IContext } from "./Context/Context";
 
 const Layout = () => {
     const location = useLocation();
@@ -43,6 +46,10 @@ const Layout = () => {
     const [showModalMsg, setShowModalMsg] = useState(false);
     const handleOpenMsg = () => {
         setShowModalMsg(!showModalMsg);
+    };
+    const [showModalUser, setShowModalUser] = useState(true);
+    const handleOpenUser = () => {
+        setShowModalUser(!showModalUser);
     };
 
     const navigationLinks = [
@@ -73,19 +80,30 @@ const Layout = () => {
         if (accessToken) {
             getUserInfo(accessToken).then((userData) => {
                 setUserData(userData);
-                // store in local storage :
-                localStorage.setItem('items', JSON.stringify(userData));
+                const token = userData.accesstoken;
+
+                // store in local storage only the token
+                localStorage.setItem('accesstoken', token);
+
+                console.log(token);
+            });
+        } else if (localStorage.getItem('accesstoken')) {
+            const token = localStorage.getItem('accesstoken');
+            getUserInfo(token).then((userData) => {
+                setUserData(userData);
             });
         }
+        console.log(userData); // debug
     }, []);
 
     const logout = () => {
-        localStorage.removeItem('items');
+        localStorage.removeItem('accesstoken');
         setUserData(null);
     };
 
     return (
         <>
+            <IContext.Provider value={userData}>
             <div className="flex flex-row relative z-20">
 
                 <header className="border-r border-gray-200">
@@ -350,10 +368,7 @@ const Layout = () => {
                     <main className='min-h-[100vh] w-full grow'>
                     <div>
                 {userData && (
-                    <div>
-                    <h1>Welcome, {userData.name}!</h1>
-                    <p>Your GitHub username is {userData.login}.</p>
-                    </div>
+                    <ModalUser showModal={showModalUser} setShowModal={setShowModalUser} closeModal={handleOpenUser}/>
                 )}
                 </div>
                         <Outlet />
@@ -366,10 +381,11 @@ const Layout = () => {
                 </div>
 
                 {/* Modals */}
-                <ModalMessage showModalPlus={showModalMsg} setShowModalPlus={setShowModalMsg} closeModalPlus={handleOpenMsg}/>
-                <ModalPlus showModalPlus={showModalPlus} setShowModalPlus={setShowModalPlus} closeModalPlus={handleOpenPlus}/>
+                <ModalMessage showModal={showModalMsg} setShowModal={setShowModalMsg} closeModal={handleOpenMsg}/>
+                <ModalPlus showModal={showModalPlus} setShowModal={setShowModalPlus} closeModal={handleOpenPlus}/>
             </div>
-
+                
+            </IContext.Provider>
         </>
     )
 };
