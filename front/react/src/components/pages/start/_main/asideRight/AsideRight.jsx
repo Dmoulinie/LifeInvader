@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import Kearanprofile from "@assets/start/kearan.jpg";
 import Lucaprofile from "@assets/start/luca.png";
@@ -9,20 +9,20 @@ import Anonymous from "@assets/start/account_anonymous.png";
 
 import { Link } from 'react-router-dom';
 
+import { useUserContext } from "@/components/layout/Context/Context";
+
 const AsideRight = () => {
-    const [userData, setUserData] = useState([]);
-    
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('items'));
-        if (user) {
-            setUserData(user);
-            console.log(userData);
-        }
-    }, []);
+    const userData = useUserContext();
 
+    // Valeurs si pas connecté
+    let username = "Anonyme";
+    let useravatar = Anonymous;
 
-    const username = userData.name;
-    const useravatar = userData.avatar;
+    // Valeurs si connecté
+    if (userData) {
+        username = userData.name;
+        useravatar = userData.avatar;
+    }
 
     return (
         <div className='min-h-screen w-11/12 mx-auto'>
@@ -67,7 +67,7 @@ const AsideRight = () => {
                     </div>
                     <div className='grow ml-3'>
                     <p className='font-bold text-sm'>Kearan Pechoux</p>
-                    <p className='text-gray-500 text-sm'>Développeur front</p>
+                    <p className='text-gray-500 text-sm'>Développeur front & back</p>
                     </div>
                     <div>
                     <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Suivre</a>

@@ -11,7 +11,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 
-const ModalMessage = ({ showModalPlus, setShowModalPlus, closeModalPlus }) => {
+const ModalMessage = ({ showModal, setShowModal, closeModal }) => {
 
     // 35 citations
     const citations = [
@@ -63,7 +63,7 @@ const ModalMessage = ({ showModalPlus, setShowModalPlus, closeModalPlus }) => {
     {/* Dialog Modal - Plus */}
     return (
         <div>
-            <Dialog open={showModalPlus} onOpenChange={setShowModalPlus}>
+            <Dialog open={showModal} onOpenChange={setShowModal}>
                 <DialogContent className="flex justify-center items-center mx-auto lg:w-8/12 md:w-10/12 sm:w-12/12">
                     <div className="transition-transform duration-500 hover:scale-[1.04] scale-100 relative border h-fit shadow-lg rounded-md bg-white mx-auto p-10">
 
@@ -78,7 +78,7 @@ const ModalMessage = ({ showModalPlus, setShowModalPlus, closeModalPlus }) => {
 
                         <div className="flex mt-12 justify-center">
                             <button
-                                onClick={() => closeModalPlus()}
+                                onClick={() => closeModal()}
                                 className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-3 py-2 
                             bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 
                             focus:ring-sky-500"
