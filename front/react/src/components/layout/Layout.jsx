@@ -9,7 +9,6 @@ import Decouvrir from "@assets/start/svg/Decouvrir.svg?react";
 import Messages from "@assets/start/svg/Messages.svg?react";
 import Notifications from "@assets/start/svg/Notifications.svg?react";
 import Plus from "@assets/start/svg/Plus.svg?react";
-import Recherche from "@assets/start/svg/Recherche.svg?react";
 import Reel from "@assets/start/svg/Reel.svg?react";
 import Threads from "@assets/start/svg/Threads.svg?react";
 import Login from "@assets/start/svg/Login.svg?react";
@@ -22,12 +21,12 @@ import ExternalLink from "./ExternalLink/ExternalLink";
 // modals
 import ModalPlus from "./modals/modalplus/ModalPlus";
 import ModalMessage from "./modals/modalmsg/ModalMessage";
+import ModalrPost from "./modals/modalrpost/ModalrPost";
 
 // Session js
 import { getUserInfo } from './Sessions';
 
 import "./Layout.css";
-import ModalUser from "./modals/modaluser/ModalUser";
 
 // Contexte
 import { IContext } from "./Context/Context";
@@ -47,15 +46,14 @@ const Layout = () => {
     const handleOpenMsg = () => {
         setShowModalMsg(!showModalMsg);
     };
-    const [showModalUser, setShowModalUser] = useState(true);
-    const handleOpenUser = () => {
-        setShowModalUser(!showModalUser);
+    const [showModalRPost, setShowModalRPost] = useState(false);
+    const handleOpenRPost = () => {
+        setShowModalRPost(!showModalRPost);
     };
 
     const navigationLinks = [
         { path: "/", label: "Accueil", icon: Accueil, href: "/", external: false, onclick: null},
-        { path: "/search", label: "Recherche", icon: Recherche, href: "/search", external: false, onclick: null},
-        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/", external: false, onclick: null },
+        { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/", external: false, onclick: handleOpenRPost },
         { path: "/reels", label: "Reels", icon: Reel, href: "https://youtu.be/dQw4w9WgXcQ?si=47-VX_Ot32PPuIoZ", external: true, onclick: null},
         { path: "/msg", label: "Messages", icon: Messages, href: "#", external: false, onclick: handleOpenMsg },
         { path: "/notif", label: "Notifications", icon: Notifications, href: "#", external: false, onclick: handleOpenPlus },
@@ -367,9 +365,6 @@ const Layout = () => {
                 <div className="grow">
                     <main className='min-h-[100vh] w-full grow'>
                     <div>
-                {userData && (
-                    <ModalUser showModal={showModalUser} setShowModal={setShowModalUser} closeModal={handleOpenUser}/>
-                )}
                 </div>
                         <Outlet />
                     </main>
@@ -383,6 +378,7 @@ const Layout = () => {
                 {/* Modals */}
                 <ModalMessage showModal={showModalMsg} setShowModal={setShowModalMsg} closeModal={handleOpenMsg}/>
                 <ModalPlus showModal={showModalPlus} setShowModal={setShowModalPlus} closeModal={handleOpenPlus}/>
+                <ModalrPost showModal={showModalRPost} setShowModal={setShowModalRPost} closeModal={handleOpenRPost}/>
             </div>
                 
             </IContext.Provider>

@@ -5,7 +5,6 @@ import Layout from './components/layout/Layout'
 
 import Start from './components/pages/start/Start'
 import Post from './components/pages/post/Post'
-import Search from './components/pages/search/Search'
 import Login from './components/pages/login/Login'
 import User from './components/pages/user/Userpage'
 import NoPage from './components/pages/nopage/NoPage'
@@ -21,7 +20,6 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Start />} />
           <Route path="post" element={<Post />} />
-          <Route path="search" element={<Search />} />
           <Route path="userpage" element={<User />} />
         </Route>
 
