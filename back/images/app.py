@@ -29,7 +29,7 @@ def home():
                 <p>A flask api implementation.   </p>
                 <ul>
                 <li><a href="/api/getallimage">GetAllImage</a></li>
-                <li><a href="/api/getallimage/abacf700-23fb-4fc9-8971-f224a8f430cb">GetImageById</a></li>
+                <li><a href="/api/getimagebyid/abacf700-23fb-4fc9-8971-f224a8f430cb">GetImageById</a></li>
                 <li><a href="/api/getallprofile/Kearan511">GetAllProfile</a></li>
                 </ul>
                 '''
@@ -39,7 +39,7 @@ def allimgs():
     image_data = load_image_data()
     return jsonify(image_data), 200
 
-@app.route('/api/getallimage/<string:image_id>', methods=['GET'])
+@app.route('/api/getimagebyid/<string:image_id>', methods=['GET'])
 def get_image_by_id(image_id):
     image_data = load_image_data()
     for image in image_data:

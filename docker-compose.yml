@@ -5,13 +5,13 @@ services:
 
   mongodb-node:
     image: mongo:6-jammy
-    networks:
-      - node-network
     ports:
       - '27017:27017'
     volumes:
       - dbdata_node:/data/db
     restart: always
+    networks:
+      - node-network
 
 
 
@@ -34,13 +34,15 @@ services:
     build: ./back/commentaires
     volumes: 
     - ./back/commentaires/:/app
-    networks:
-      - node-network
     ports:
       - "3000:3000"
     restart: unless-stopped
     depends_on:
       - mongodb-node
+    networks:
+      - node-network
+    environment:
+      - MONGO_URI=mongodb://mongodb-node:27017/life-invader-comments
     
   java:
     container_name: java

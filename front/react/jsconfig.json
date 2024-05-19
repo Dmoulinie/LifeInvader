@@ -1,13 +1,14 @@
 {
-"compilerOptions": {
-    // ...
-    "baseUrl": ".",
-    "paths": {
-    "@/*": [
-        "./src/*"
-    ]
+    "compilerOptions": {
+        // ...
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "./src/*",
+                "./src/components/pages/user/*" // Add the missing file path here
+            ]
+        }
+        // ...
     }
-    // ...
-}
 }
   
