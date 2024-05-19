@@ -37,9 +37,13 @@ const AsideRight = () => {
                 <div className='grow ml-3'>
 
                 {!userData ? (
-                    <p className='font-bold text-sm'>Anonyme</p>
+                    <Link to="/userpage">
+                        <p className='font-bold text-[0.92rem] hover:text-sky-700'>Anonyme</p>
+                    </Link>
                 ) : (
-                    <p className='font-bold text-sm'>{username}</p>
+                    <Link to="/userpage">
+                    <p className='font-bold text-[0.92rem] hover:text-sky-700'>{username}</p>
+                    </Link>
                 )}
                 <p className='text-gray-500 text-sm'>Vous</p>
                 </div>

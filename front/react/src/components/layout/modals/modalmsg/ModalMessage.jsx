@@ -14,6 +14,7 @@ import {
 const ModalMessage = ({ showModal, setShowModal, closeModal }) => {
 
     const [citationdesigned, setCitationDesigned] = useState(""); // Citation [35 citations]
+    const [color, setColor] = useState("");
 
     // 35 citations
     const citations = [
@@ -55,16 +56,54 @@ const ModalMessage = ({ showModal, setShowModal, closeModal }) => {
         "Je suis tellement mauvais en maths que je ne peux même pas compter jusqu'à l'infini."
     ];
 
+    const allcolorclass = [
+        "#f44336",
+        "#e91e63",
+        "#9c27b0",
+        "#673ab7",
+        "#3f51b5",
+        "#2196f3",
+        "#03a9f4",
+        "#00bcd4",
+        "#009688",
+        "#4caf50",
+        "#8bc34a",
+        "#cddc39",
+        "#ffeb3b",
+        "#ffc107",
+        "#ff9800",
+        "#ff5722",
+        "#795548",
+        "#9e9e9e",
+        "#607d8b",
+    ];
+
     
     function citationAleatoire() {
         const indexAleatoire = Math.floor(Math.random() * citations.length);
         return citations[indexAleatoire];
     }
+    function couleurAleatoire() {
+        const indexAleatoire = Math.floor(Math.random() * allcolorclass.length);
+        return allcolorclass[indexAleatoire];
+    }
     useEffect(() => {
         if (showModal) {
             setCitationDesigned(citationAleatoire());
+            setColor(couleurAleatoire());
         }
     }, [showModal]);
+
+    useEffect(() => {
+        if(showModal) {
+            const svgElement = document.getElementById('my-svgmsg');
+            const btnElement = document.getElementById('my-svgbtn');
+            const pathElement = svgElement.querySelectorAll('path');
+            console.log(pathElement);
+            pathElement[1].setAttribute('fill', color);
+            btnElement.style.backgroundColor = color;
+        }
+    }, [color]);
 
     {/* Dialog Modal - Plus */ }
     return (
@@ -74,7 +113,7 @@ const ModalMessage = ({ showModal, setShowModal, closeModal }) => {
                     <div className="transition-transform duration-500 hover:scale-[1.04] scale-100 relative border h-fit shadow-lg rounded-md bg-white mx-auto p-10">
 
                         <div className="mx-auto max-w-2xl lg:max-w-4xl">
-                            <Insta className="flex mx-auto w-36" />
+                            <Insta className={`flex mx-auto w-36`}/>
                             <figure className="mt-4">
                                 <blockquote className="text-center text-sm font-medium leading-8 text-gray-900 sm:text-lg sm:leading-9">
                                     <p>“{citationdesigned}”</p>
@@ -82,12 +121,12 @@ const ModalMessage = ({ showModal, setShowModal, closeModal }) => {
                             </figure>
                         </div>
 
-                        <div className="flex mt-12 justify-center">
-                            <button
+                        <div className="flex mt-7 justify-center">
+                            <button id="my-svgbtn"
                                 onClick={() => closeModal()}
-                                className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-3 py-2 
-                                bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 
-                                focus:ring-sky-500">
+                                className={`inline-flex justify-center rounded-md border border-transparent shadow-sm px-3 py-2 
+                                text-base font-medium text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 
+                                focus:ring-sky-500`}>
                                 Fermer
                             </button>
                         </div>

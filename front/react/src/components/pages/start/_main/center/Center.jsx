@@ -161,7 +161,7 @@ const Center = () => {
                     </div>
                 </div>
             ) : (
-                <div className='grid grid-cols-1 px-10'>
+                <div className='grid grid-cols-1 sm:px-10 px-3'>
                     {allPosts.slice(0, postsToShow).map((post) => (
                         <div key={post.id}>
                         <div key={post.id} className='bg-slate-100 rounded-lg'>
@@ -185,7 +185,7 @@ const Center = () => {
                                 </div>
                             </div>
 
-                            <p className='text-sm px-2 pt-2'>
+                            <p className='sm:text-sm text-xs px-2 pt-2'>
                                 <strong>♔ Créateur : </strong><span>{post.description}</span>
                             </p>
                             
@@ -194,7 +194,7 @@ const Center = () => {
                                 .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)) // sort by createdAt in descending order
                                 .slice(0, commentsToShow[post.id]) // show only the first 'commentsToShow' comments
                                 .map((comment) => (
-                                <div key={comment._id} className='flex flex-row text-sm'>
+                                <div key={comment._id} className='flex flex-row sm:text-sm text-xs'>
                                     <p className='font-medium'>By {comment.authorName} :</p>
                                     <p className='pl-1 grow'> {comment.content}</p>
                                     <p className='italic'>{convertTimestampToHumanReadable(comment.createdAt)}</p>
@@ -202,13 +202,13 @@ const Center = () => {
                                 ))}
                             {commentsToShow[post.id] < allCommentsPostID[post.id].length && (
                                 <button
-                                className='mx-auto text-gray-400 hover:text-gray-500 font-bold rounded text-sm'
+                                className='mx-auto text-gray-400 hover:text-gray-500 font-bold rounded text-xs sm:text-sm'
                                 onClick={() => handleShowMore(post.id)}>
                                 Voir plus de commentaire(s) ({allCommentsPostID[post.id].length - commentsToShow[post.id]})
                                 </button>
                             )}
                             </section>
-
+                            { userData && (
                             <form className='flex flex-row justify-center items-center gap-2 px-2 pb-7' onSubmit={(e) => handleFormSubmit(e, post.id)}>
                                 <input
                                     type='text'
@@ -233,9 +233,10 @@ const Center = () => {
                                     Envoyer
                                 </button>
                             </form>
+                            )}
 
                         </div>
-                            <hr className='my-20 w-10/12 mx-auto border-gray-300'></hr>
+                            <hr className='md:my-20 sm:my-18 my-12 w-10/12 mx-auto border-gray-300'></hr>
                         </div>
                     ))}
                 {postsToShow < allPosts.length && (

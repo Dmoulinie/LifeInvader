@@ -137,6 +137,7 @@ const ModalrPost = ({ showModal, setShowModal, userData }) => {
         <div>
             <Dialog open={showModal} onOpenChange={setShowModal}>
                 <DialogContent className="block mx-auto w-auto">
+                <h2 className="text-2xl font-bold mb-5 underline">Suggestion aléatoire pour vous :</h2>
                     <div className="h-fit w-[500px] rounded-md border p-5 mx-auto">
                     <div className="rounded-lg">
 
@@ -185,6 +186,7 @@ const ModalrPost = ({ showModal, setShowModal, userData }) => {
                             )}
                             </section>
 
+                            { userData && (
                             <form className='flex flex-row justify-center items-center gap-2 px-2 pb-7' onSubmit={(e) => handleFormSubmit(e, Post.id)}>
                                 <input
                                     type='text'
@@ -209,6 +211,7 @@ const ModalrPost = ({ showModal, setShowModal, userData }) => {
                                     Envoyer
                                 </button>
                             </form>
+                            )}
 
                         </div>
             
