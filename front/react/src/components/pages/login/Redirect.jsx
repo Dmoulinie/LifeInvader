@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import './Redirect.css';
 
 const RedirectPage = () => {
-    const [remainingTime, setRemainingTime] = useState(5000); // 3 seconds in milliseconds
+    const [remainingTime, setRemainingTime] = useState(1000); // 1 seconds in milliseconds
 
     
     useEffect(() => {

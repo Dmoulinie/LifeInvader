@@ -56,7 +56,7 @@ const Layout = () => {
         { path: "/discovery", label: "Découvrir", icon: Decouvrir, href: "/", external: false, onclick: handleOpenRPost },
         { path: "/reels", label: "Reels", icon: Reel, href: "https://youtu.be/dQw4w9WgXcQ?si=47-VX_Ot32PPuIoZ", external: true, onclick: null},
         { path: "/msg", label: "Messages", icon: Messages, href: "#", external: false, onclick: handleOpenMsg },
-        { path: "/notif", label: "Notifications", icon: Notifications, href: "#", external: false, onclick: handleOpenPlus },
+        { path: "/notif", label: "Notifications", icon: Notifications, href: "#", external: false, onclick: null},
         { path: "/post", label: "Créer", icon: Creer, href: "/post", external: false, onclick: null },
     ];
     const otherNavigationLinks = [
