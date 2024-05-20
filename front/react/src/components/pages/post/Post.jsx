@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FileIcon from "@assets/post/svg/fileicon.svg?react";
 import Eye from "@assets/post/svg/eye.svg?react";
 import EyeSlash from "@assets/post/svg/eyeslash.svg?react";
 
 import { v4 as uuidv4 } from 'uuid';
+import { useUserContext } from '@/components/layout/Context/Context';
 
 import "./Post.css";
 
 const Post = () => {
+  const userData = useUserContext();
+  
+  
   const [selectedFile, setSelectedFile] = useState(null);  
+  const [userconnected, setuserconnected] = useState(null);  
   const [description, setDescription] = useState('');
   const [previewVisible, setPreviewVisible] = useState(false); // État pour la visibilité de l'aperçu
-
+  
+  useEffect(() => {
+    if (userData) {
+      setuserconnected(userData.name)
+    }
+  }, [userData]);
+  
   const togglePreview = () => {
     setPreviewVisible(!previewVisible);
   };
@@ -23,9 +34,9 @@ const Post = () => {
     setDescription(event.target.value);
   };
 
+
   const handleSubmit = (event) => {
     event.preventDefault();
-
     if (!selectedFile) {
         alert('Veuillez sélectionner un fichier');
         return;
@@ -34,21 +45,40 @@ const Post = () => {
     const imageData = {
         id: uuidv4(), // Générer un ID unique
         name: selectedFile.name,
-        username: 'utilisateurConnecté', // Remplacez par le nom d'utilisateur réel
+        username: userconnected, // Remplacez par le nom d'utilisateur réel
         size: selectedFile.size,
         type: selectedFile.type,
         date: new Date().getTime(),
         description: description, // Ajouter la description
     };
 
-    // Ici, vous pouvez gérer l'envoi du formulaire et de l'image
-    console.log('Nom du fichier :', selectedFile.name);
-    console.log('Données de l\'image :', imageData);
+    const formData = new FormData();
+    formData.append('image', selectedFile);
+    formData.append('data', JSON.stringify(imageData));
+    
+    console.log('Envoi des données i :', selectedFile);
+    console.log('Envoi des données d :', imageData);
+    fetch('http://localhost:5000/api/addimage', {
+      method: 'POST',
+      body: formData,
+      header: { 'Content-Type': 'multipart/form-data' },
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+
+    setSelectedFile(null);
+    setDescription('');
+    setPreviewVisible(false);
+
+    // redirect
+    window.location.href = '/'; // Rediriger vers la page d'accueil
   };
+
 
   return (
     <div className='flex align-center justify-center flex-col min-h-screen py-32'>
-      <form className="transition-transform duration-300 hover:scale-[1.04] scale-100 mx-auto lg:w-6/12 md:w-8/12 w-11/12 flex flex-col justify-center items-center align-center border border-gray-200 rounded-lg p-12 gap-3" onSubmit={handleSubmit}>
+      <form className="transition-transform duration-300 hover:scale-[1.04] scale-100 mx-auto 2xl:w-5/12 xl:w-7/12 lg:w-8/12 w-11/12 flex flex-col justify-center items-center align-center border border-gray-200 rounded-lg p-12 gap-3" onSubmit={handleSubmit}>
         <h2 className="font-bold text-2xl mb-4">Publiez votre image maintenant :</h2>
 
         { /* L'image */ }
@@ -101,10 +131,16 @@ const Post = () => {
         </textarea>
 
 
-        { /* Le bouton d'envoi */}
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">
-          Envoyer l'image
-        </button>
+        {!userconnected ? (
+          <a href='./login' className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded mt-5">
+            Connectez-vous
+          </a>
+        ) : (
+          <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">
+            Envoyer l'image 
+          </button>
+        )}
+
       </form>
     </div>
   );

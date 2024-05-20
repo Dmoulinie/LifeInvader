@@ -1,0 +1,16 @@
+.animit {
+    opacity: 0;
+    animation: scaleanimat 1.5s ease-in-out infinite;
+    mix-blend-mode: screen;
+}
+@keyframes scaleanimat {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+    
+}

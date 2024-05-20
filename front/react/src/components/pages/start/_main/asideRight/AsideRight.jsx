@@ -1,27 +1,63 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import Kearanprofile from "@assets/start/kearan.jpg";
 import Lucaprofile from "@assets/start/luca.png";
 import Damienprofile from "@assets/start/damien.png";
 import Danprofile from "@assets/start/dan.jpg";
 import Nathanprofile from "@assets/start/nathan.png";
+import Anonymous from "@assets/start/account_anonymous.png";
+
 import { Link } from 'react-router-dom';
 
+import { useUserContext } from "@/components/layout/Context/Context";
+
 const AsideRight = () => {
+    const userData = useUserContext();
+
+    // Valeurs si pas connecté
+    let username = "Anonyme";
+    let useravatar = Anonymous;
+
+    // Valeurs si connecté
+    if (userData) {
+        username = userData.name;
+        useravatar = userData.avatar;
+    }
+
     return (
         <div className='min-h-screen w-11/12 mx-auto'>
             <div className='flex flex-row justify-center align-center items-center'>
                 <div>
-                    <img className="rounded-full w-11" src={Kearanprofile} alt='kearan'></img>
+                {!userData ? (
+                    <img className="rounded-full w-11" src={Anonymous} alt='anonyme'></img>
+                ) : (
+                    <img className="rounded-full w-11" src={useravatar} alt='kearan'></img>
+                )}
                 </div>
                 <div className='grow ml-3'>
-                <p className='font-bold text-sm'>Kearan Pechoux</p>
+
+                {!userData ? (
+                    <Link to="/userpage">
+                        <p className='font-bold text-[0.92rem] hover:text-sky-700'>Anonyme</p>
+                    </Link>
+                ) : (
+                    <Link to="/userpage">
+                    <p className='font-bold text-[0.92rem] hover:text-sky-700'>{username}</p>
+                    </Link>
+                )}
                 <p className='text-gray-500 text-sm'>Vous</p>
                 </div>
                 <div>
-                <Link to="/userpage">
-                    <span className='font-semibold text-sky-500 text-xs hover:text-sky-800 cursor-pointer'>Voir le profil</span>
-                </Link>
+
+                {!userData ? (
+                    <Link to="/login">
+                        <span className='font-semibold text-sky-500 text-xs hover:text-sky-800 cursor-pointer'>Se connecter</span>
+                    </Link>
+                ) : (
+                    <Link to="/userpage">
+                        <span className='font-semibold text-sky-500 text-xs hover:text-sky-800 cursor-pointer'>Voir le profil</span>
+                    </Link>
+                )}
                 </div>
             </div>
 
@@ -35,7 +71,7 @@ const AsideRight = () => {
                     </div>
                     <div className='grow ml-3'>
                     <p className='font-bold text-sm'>Kearan Pechoux</p>
-                    <p className='text-gray-500 text-sm'>Développeur front</p>
+                    <p className='text-gray-500 text-sm'>Développeur front & back</p>
                     </div>
                     <div>
                     <a className='font-semibold text-sky-500 text-xs hover:text-sky-800' href='https://www.facebook.com/kearan.rouquin/' target='_blank'>Suivre</a>

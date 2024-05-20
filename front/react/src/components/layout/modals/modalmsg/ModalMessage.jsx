@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Insta from "@/assets/instamsg.svg?react";
 
@@ -11,13 +11,16 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 
-const ModalMessage = ({ showModalPlus, setShowModalPlus, closeModalPlus }) => {
+const ModalMessage = ({ showModal, setShowModal, closeModal }) => {
+
+    const [citationdesigned, setCitationDesigned] = useState(""); // Citation [35 citations]
+    const [color, setColor] = useState("");
 
     // 35 citations
     const citations = [
         "Ce bouton ne fait absolument rien. Mais vous avez cliqué dessus quand même. Bravo !",
         "Félicitations ! Vous avez trouvé le bouton secret qui ne sert à rien. Votre récompense ? La satisfaction d'avoir cliqué.",
-        "Erreur 404 : Fonctionnalité non trouvée. Mais on vous aime quand même.", 
+        "Erreur 404 : Fonctionnalité non trouvée. Mais on vous aime quand même.",
         "Ce bouton est en construction. Revenez dans 100 ans.",
         "Vous êtes le visiteur numéro 42. La réponse à la grande question sur la vie, l'univers et le reste.",
         "Ce bouton est alimenté par des hamsters qui courent dans des roues. Soyez gentil, ils sont fatigués.",
@@ -50,39 +53,80 @@ const ModalMessage = ({ showModalPlus, setShowModalPlus, closeModalPlus }) => {
         "Je suis tellement fatigué que je pourrais dormir sur un fil de fer barbelé.",
         "Je suis tellement indécis que je ne peux même pas décider si je suis indécis ou pas.",
         "J'ai tellement de choses à faire que je vais faire une sieste.",
-        "Je suis tellement mauvais en maths que je ne peux même pas compter jusqu'à l'infini." 
-      ];
+        "Je suis tellement mauvais en maths que je ne peux même pas compter jusqu'à l'infini."
+    ];
 
+    const allcolorclass = [
+        "#f44336",
+        "#e91e63",
+        "#9c27b0",
+        "#673ab7",
+        "#3f51b5",
+        "#2196f3",
+        "#03a9f4",
+        "#00bcd4",
+        "#009688",
+        "#4caf50",
+        "#8bc34a",
+        "#cddc39",
+        "#ffeb3b",
+        "#ffc107",
+        "#ff9800",
+        "#ff5722",
+        "#795548",
+        "#9e9e9e",
+        "#607d8b",
+    ];
+
+    
     function citationAleatoire() {
         const indexAleatoire = Math.floor(Math.random() * citations.length);
         return citations[indexAleatoire];
     }
+    function couleurAleatoire() {
+        const indexAleatoire = Math.floor(Math.random() * allcolorclass.length);
+        return allcolorclass[indexAleatoire];
+    }
+    useEffect(() => {
+        if (showModal) {
+            setCitationDesigned(citationAleatoire());
+            setColor(couleurAleatoire());
+        }
+    }, [showModal]);
 
-    const citationchoisi = citationAleatoire();
+    useEffect(() => {
+        if(showModal) {
+            const svgElement = document.getElementById('my-svgmsg');
+            const btnElement = document.getElementById('my-svgbtn');
+            const pathElement = svgElement.querySelectorAll('path');
+            console.log(pathElement);
+            pathElement[1].setAttribute('fill', color);
+            btnElement.style.backgroundColor = color;
+        }
+    }, [color]);
 
-    {/* Dialog Modal - Plus */}
+    {/* Dialog Modal - Plus */ }
     return (
         <div>
-            <Dialog open={showModalPlus} onOpenChange={setShowModalPlus}>
+            <Dialog open={showModal} onOpenChange={setShowModal}>
                 <DialogContent className="flex justify-center items-center mx-auto lg:w-8/12 md:w-10/12 sm:w-12/12">
                     <div className="transition-transform duration-500 hover:scale-[1.04] scale-100 relative border h-fit shadow-lg rounded-md bg-white mx-auto p-10">
 
                         <div className="mx-auto max-w-2xl lg:max-w-4xl">
-                            <Insta className="flex mx-auto w-36"/>
+                            <Insta className={`flex mx-auto w-36`}/>
                             <figure className="mt-4">
-                            <blockquote className="text-center text-lg font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
-                                <p>“{citationchoisi}”</p>
-                            </blockquote>
+                                <blockquote className="text-center text-sm font-medium leading-8 text-gray-900 sm:text-lg sm:leading-9">
+                                    <p>“{citationdesigned}”</p>
+                                </blockquote>
                             </figure>
                         </div>
 
-                        <div className="flex mt-12 justify-center">
-                            <button
-                                onClick={() => closeModalPlus()}
-                                className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-3 py-2 
-                            bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 
-                            focus:ring-sky-500"
-                            >
+                        <div className="flex mt-7 justify-center">
+                            <button id="my-svgbtn"
+                                onClick={() => closeModal()}
+                                className={`inline-flex justify-center rounded-md border border-transparent shadow-sm px-3 py-2 
+                                text-base font-medium text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 
+                                focus:ring-sky-500`}>
                                 Fermer
                             </button>
                         </div>

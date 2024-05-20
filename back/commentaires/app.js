@@ -2,20 +2,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+var cors = require('cors');
+
 
 // Initialisation de l'application Express
 const app = express()
 const PORT = 3000;
-const HOST = 'localhost'
+const HOST = '0.0.0.0'
 
 // Configuration de bodyParser pour analyser les corps de requête JSON
 app.use(bodyParser.json());
+app.use(cors());
 
 // MongoDB
-mongoose.connect('mongodb://localhost:27017/life-invader-comments', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/life-invader-comments';
+mongoose.connect(mongoUri);
 const db = mongoose.connection;
 
 
@@ -28,7 +29,7 @@ app.get("/database", (req, res) => {
   * Connection ready state
   *
   * - 0 = disconnected
-  * - 1 = connected
+  * - 1 = connectedS
   * - 2 = connecting
   * - 3 = disconnecting
   * - 99 = uninitialized
@@ -45,9 +46,9 @@ db.once('open', () => {
 
 // Modèle de schéma pour les commentaires
 const commentSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId, // Ajout d'un ID pour les commentaires (MongoDB le fait automatiquement)
-  postId: Number,
+  postId: String,
   authorId: Number,
+  authorName: String,
   content: String,
   createdAt: { type: Date, default: Date.now }
 });
@@ -57,8 +58,8 @@ const Comment = mongoose.model('Comment', commentSchema);
 // Route pour créer un nouveau commentaire
 app.post('/comments/add', async (req, res) => {
   try {
-    const { postId, authorId, content } = req.body;
-    const newComment = new Comment({ postId, authorId, content });
+    const { postId, authorId, authorName, content } = req.body;
+    const newComment = new Comment({ postId, authorId, authorName, content });
     const savedComment = await newComment.save();
     res.status(201).json(savedComment);
   } catch (error) {
@@ -123,4 +124,4 @@ app.delete('/comments/delete/:_id', async (req, res) => {
 
 // Démarrage du serveur
 app.listen(PORT, HOST)
-console.log(`Our app running on http://${HOST}:${PORT}`)
+console.log(`Our app running on http://localhost:${PORT}`)

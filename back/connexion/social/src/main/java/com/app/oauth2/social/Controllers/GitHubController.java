@@ -88,7 +88,7 @@ public class GitHubController {
         userRepository.save(new User(id,name, node_id, avatar_url, html_url, access_token));
         
         // Faire un redirect vers "localhost:5173?id=id"
-        return new RedirectView("http://localhost:5173?token=" + access_token);
+        return new RedirectView("http://localhost:5173/redirect/?token=" + access_token);
 
     }
 
