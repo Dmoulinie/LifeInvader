@@ -8,6 +8,7 @@ import Post from './components/pages/post/Post'
 import Login from './components/pages/login/Login'
 import User from './components/pages/user/Userpage'
 import NoPage from './components/pages/nopage/NoPage'
+import RedirectPage from './components/pages/login/Redirect'
 import './App.css'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route index element={<Start />} />
           <Route path="post" element={<Post />} />
           <Route path="userpage" element={<User />} />
+          <Route path="redirect" element={<RedirectPage />} />
         </Route>
 
         {/* Route pour le Login. */}
@@ -28,7 +30,6 @@ function App() {
 
         {/* Route pour la page 404 */}
         <Route path="*" element={<NoPage />} />
-
 
       </Routes>
     </BrowserRouter>
