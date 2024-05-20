@@ -119,8 +119,25 @@ app.delete('/comments/delete/:_id', async (req, res) => {
 });
 
 
+// si bdd, vide on insert les données de test "comments.json" dans la bdd mongoDB :
+// Load the comments from the JSON file
+const commentsJson = require('./defaultcomments.json');
 
-
+// Check if the database is empty
+Comment.estimatedDocumentCount().then(count => {
+  if (count === 0) {
+    // Database is empty, insert the data
+    Comment.insertMany(commentsJson)
+      .then(() => {
+        console.log('Inserted comments into the database');
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  } else {
+    console.log('Database is not empty, skipping insertion');
+  }
+});
 
 // Démarrage du serveur
 app.listen(PORT, HOST)
