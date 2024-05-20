@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import getAllPosts from './CenterGetPosts';
 import { getCommentsByPostId } from './CenterGetComments';
-import { handleSubmitComment, sendComment } from './CenterPostComments';
+import { handleSubmitComment, sendComment } from './CenterPostComments.js';
 
 import './Center.css';
 
@@ -108,7 +108,7 @@ const Center = () => {
                 setallCommentsPostID((prevComments) => ({ ...prevComments, [postID]: comments }));
             });
         }
-    }, [allPosts]);
+    }, [allPosts, postID]);
 
 
     // Update comments when postID changes

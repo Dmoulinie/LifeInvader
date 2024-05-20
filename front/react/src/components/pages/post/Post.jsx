@@ -66,6 +66,13 @@ const Post = () => {
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.error(error));
+
+    setSelectedFile(null);
+    setDescription('');
+    setPreviewVisible(false);
+
+    // redirect
+    window.location.href = '/'; // Rediriger vers la page d'accueil
   };
 
 

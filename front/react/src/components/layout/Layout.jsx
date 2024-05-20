@@ -104,7 +104,7 @@ const Layout = () => {
             <IContext.Provider value={userData}>
             <div className="flex flex-row relative z-20">
 
-                <header className="border-r border-gray-200">
+                <header className="border-r border-gray-200" id="remove-in-redirect">
 
                     { /* Pour écran large */}
                     <div className="hidden sm:hidden lg:flex flex-none w-[15.4rem] relative z-20 border-r border-slate-300">
