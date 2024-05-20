@@ -186,7 +186,7 @@ const Center = () => {
                             </div>
 
                             <p className='sm:text-sm text-xs px-2 pt-2'>
-                                <strong>♔ Créateur : </strong><span>{post.description}</span>
+                                <strong>♔ {post.username} : </strong><span>{post.description}</span>
                             </p>
                             
                             <section className='px-4 pb-4 flex flex-col justify-center'>
