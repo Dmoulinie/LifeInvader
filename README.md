@@ -55,7 +55,7 @@ LifeInvader est une application web de réseau social inspirée d'Instagram. Ell
 | Front |  Javascript |    React    |    5173     |        X        |        X        |
 | Back  |     Java    |  Springboot |    8080     |      MongoDB    |  27018 : 27017  |
 | Back  |    Node.js  |   Express   |    3000     |      MongoDB    |  27017 : 27017  |
-| Back  |    Python   |    Flask    |    5000     |      MongoDB    |  27017 : 27017  |
+| Back  |    Python   |    Flask    |    5000     |      JsonDB     |        X        |
 
 ## Routes API / Informations générales
 
